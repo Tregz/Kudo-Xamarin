@@ -5,10 +5,10 @@ namespace Kudo.iOS
 {
     public partial class InfoController : UIViewController
     {
-        public AboutViewModel ViewModel { get; set; }
+        public InfoViewModel ViewModel { get; set; }
         public InfoController(IntPtr handle) : base(handle)
         {
-            ViewModel = new AboutViewModel();
+            ViewModel = new InfoViewModel();
         }
 
         public override void ViewDidLoad()
@@ -17,7 +17,7 @@ namespace Kudo.iOS
 
             Title = ViewModel.Title;
 
-            AppNameLabel.Text = "kudo";
+            AppNameLabel.Text = "Kudo";
             VersionLabel.Text = "1.0";
             AboutTextView.Text = "This app is written in C# and native APIs using the Xamarin Platform. It shares code with its iOS, Android, & Windows versions.";
         }

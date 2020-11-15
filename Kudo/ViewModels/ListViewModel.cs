@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace Kudo
 {
-    public class ItemsViewModel : BaseViewModel
+    public class ListViewModel : BaseViewModel
     {
         public ObservableCollection<Item> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
         public Command AddItemCommand { get; set; }
 
-        public ItemsViewModel()
+        public ListViewModel()
         {
             Title = "Browse";
             Items = new ObservableCollection<Item>();

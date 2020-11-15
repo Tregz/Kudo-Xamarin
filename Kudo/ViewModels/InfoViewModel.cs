@@ -2,9 +2,9 @@
 
 namespace Kudo
 {
-    public class AboutViewModel : BaseViewModel
+    public class InfoViewModel : BaseViewModel
     {
-        public AboutViewModel()
+        public InfoViewModel()
         {
             Title = "About";
 

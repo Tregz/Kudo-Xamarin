@@ -18,7 +18,7 @@ namespace Kudo.Droid
         SwipeRefreshLayout refresher;
 
         ProgressBar progress;
-        public static ItemsViewModel ViewModel { get; set; }
+        public static ListViewModel ViewModel { get; set; }
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -88,10 +88,10 @@ namespace Kudo.Droid
 
     class BrowseItemsAdapter : ListRecycler
     {
-        ItemsViewModel viewModel;
+        ListViewModel viewModel;
         Activity activity;
 
-        public BrowseItemsAdapter(Activity activity, ItemsViewModel viewModel)
+        public BrowseItemsAdapter(Activity activity, ListViewModel viewModel)
         {
             this.viewModel = viewModel;
             this.activity = activity;

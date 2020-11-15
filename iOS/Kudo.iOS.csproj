@@ -178,6 +178,10 @@
     <Compile Include="Controllers\Item\PlusItemController.designer.cs">
       <DependentUpon>PlusItemController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\Game\GameController.cs" />
+    <Compile Include="Controllers\Game\GameController.designer.cs">
+      <DependentUpon>GameController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Entitlements.plist" />
@@ -191,6 +195,7 @@
   <ItemGroup>
     <Folder Include="Assets.xcassets\Logo.imageset\" />
     <Folder Include="Views\" />
+    <Folder Include="Controllers\Game\" />
   </ItemGroup>
   <Import Project="..\Kudo\Kudo.projitems" Label="Shared" Condition="Exists('..\Kudo\Kudo.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

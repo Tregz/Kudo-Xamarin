@@ -2,10 +2,10 @@
 
 namespace Kudo
 {
-    public class ItemDetailViewModel : BaseViewModel
+    public class SoloViewModel : BaseViewModel
     {
         public Item Item { get; set; }
-        public ItemDetailViewModel(Item item = null)
+        public SoloViewModel(Item item = null)
         {
             if (item != null)
             {

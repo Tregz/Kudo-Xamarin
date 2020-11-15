@@ -5,7 +5,7 @@ namespace Kudo.iOS
 {
     public partial class SoloItemController : UIViewController
     {
-        public ItemDetailViewModel ViewModel { get; set; }
+        public SoloViewModel ViewModel { get; set; }
         public SoloItemController(IntPtr handle) : base(handle) { }
 
         public override void ViewDidLoad()

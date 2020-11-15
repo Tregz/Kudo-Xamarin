@@ -6,7 +6,7 @@ namespace Kudo.iOS
 {
     public partial class PlusItemController : UIViewController
     {
-        public ItemsViewModel ViewModel { get; set; }
+        public ListViewModel ViewModel { get; set; }
 
         public PlusItemController(IntPtr handle) : base(handle)
         {

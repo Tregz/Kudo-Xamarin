@@ -10,7 +10,7 @@ namespace Kudo.iOS
     {
         UIRefreshControl refreshControl;
 
-        public ItemsViewModel ViewModel { get; set; }
+        public ListViewModel ViewModel { get; set; }
 
         public ListController(IntPtr handle) : base(handle)
         {
@@ -20,7 +20,7 @@ namespace Kudo.iOS
         {
             base.ViewDidLoad();
 
-            ViewModel = new ItemsViewModel();
+            ViewModel = new ListViewModel();
 
             // Setup UITableView.
             refreshControl = new UIRefreshControl();
@@ -50,7 +50,7 @@ namespace Kudo.iOS
                 var indexPath = TableView.IndexPathForCell(sender as UITableViewCell);
                 var item = ViewModel.Items[indexPath.Row];
 
-                controller.ViewModel = new ItemDetailViewModel(item);
+                controller.ViewModel = new SoloViewModel(item);
             }
             else
             {
@@ -94,9 +94,9 @@ namespace Kudo.iOS
     {
         static readonly NSString CELL_IDENTIFIER = new NSString("ITEM_CELL");
 
-        ItemsViewModel viewModel;
+        ListViewModel viewModel;
 
-        public ItemsDataSource(ItemsViewModel viewModel)
+        public ItemsDataSource(ListViewModel viewModel)
         {
             this.viewModel = viewModel;
         }
