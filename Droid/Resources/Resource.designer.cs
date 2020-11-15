@@ -2345,55 +2345,58 @@ namespace Kudo.Droid
 			public const int heroplaceholder = 2131230819;
 			
 			// aapt resource value: 0x7F080064
-			public const int ic_save = 2131230820;
+			public const int ic_launcher = 2131230820;
 			
 			// aapt resource value: 0x7F080065
-			public const int navigation_empty_icon = 2131230821;
+			public const int ic_save = 2131230821;
 			
 			// aapt resource value: 0x7F080066
-			public const int notification_action_background = 2131230822;
+			public const int navigation_empty_icon = 2131230822;
 			
 			// aapt resource value: 0x7F080067
-			public const int notification_bg = 2131230823;
+			public const int notification_action_background = 2131230823;
 			
 			// aapt resource value: 0x7F080068
-			public const int notification_bg_low = 2131230824;
+			public const int notification_bg = 2131230824;
 			
 			// aapt resource value: 0x7F080069
-			public const int notification_bg_low_normal = 2131230825;
+			public const int notification_bg_low = 2131230825;
 			
 			// aapt resource value: 0x7F08006A
-			public const int notification_bg_low_pressed = 2131230826;
+			public const int notification_bg_low_normal = 2131230826;
 			
 			// aapt resource value: 0x7F08006B
-			public const int notification_bg_normal = 2131230827;
+			public const int notification_bg_low_pressed = 2131230827;
 			
 			// aapt resource value: 0x7F08006C
-			public const int notification_bg_normal_pressed = 2131230828;
+			public const int notification_bg_normal = 2131230828;
 			
 			// aapt resource value: 0x7F08006D
-			public const int notification_icon_background = 2131230829;
+			public const int notification_bg_normal_pressed = 2131230829;
 			
 			// aapt resource value: 0x7F08006E
-			public const int notification_template_icon_bg = 2131230830;
+			public const int notification_icon_background = 2131230830;
 			
 			// aapt resource value: 0x7F08006F
-			public const int notification_template_icon_low_bg = 2131230831;
+			public const int notification_template_icon_bg = 2131230831;
 			
 			// aapt resource value: 0x7F080070
-			public const int notification_tile_bg = 2131230832;
+			public const int notification_template_icon_low_bg = 2131230832;
 			
 			// aapt resource value: 0x7F080071
-			public const int notify_panel_notification_icon_bg = 2131230833;
+			public const int notification_tile_bg = 2131230833;
 			
 			// aapt resource value: 0x7F080072
-			public const int tooltip_frame_dark = 2131230834;
+			public const int notify_panel_notification_icon_bg = 2131230834;
 			
 			// aapt resource value: 0x7F080073
-			public const int tooltip_frame_light = 2131230835;
+			public const int tooltip_frame_dark = 2131230835;
 			
 			// aapt resource value: 0x7F080074
-			public const int xamarin_logo = 2131230836;
+			public const int tooltip_frame_light = 2131230836;
+			
+			// aapt resource value: 0x7F080075
+			public const int xamarin_logo = 2131230837;
 			
 			static Drawable()
 			{
@@ -3179,10 +3182,10 @@ namespace Kudo.Droid
 			public const int design_text_input_password_icon = 2131427371;
 			
 			// aapt resource value: 0x7F0B002C
-			public const int fragment_about = 2131427372;
+			public const int fragment_info = 2131427372;
 			
 			// aapt resource value: 0x7F0B002D
-			public const int fragment_browse = 2131427373;
+			public const int fragment_list = 2131427373;
 			
 			// aapt resource value: 0x7F0B002E
 			public const int fragment_myitems = 2131427374;
@@ -3288,8 +3291,11 @@ namespace Kudo.Droid
 		public partial class Mipmap
 		{
 			
+			// aapt resource value: 0x7F0D0001
+			public const int Icon = 2131558401;
+			
 			// aapt resource value: 0x7F0D0000
-			public const int Icon = 2131558400;
+			public const int ic_launcher = 2131558400;
 			
 			static Mipmap()
 			{

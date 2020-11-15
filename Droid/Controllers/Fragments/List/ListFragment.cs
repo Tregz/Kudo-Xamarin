@@ -31,7 +31,7 @@ namespace Kudo.Droid
         {
             ViewModel = new ItemsViewModel();
 
-            View view = inflater.Inflate(Resource.Layout.fragment_browse, container, false);
+            View view = inflater.Inflate(Resource.Layout.fragment_list, container, false);
             var recyclerView =
                 view.FindViewById<RecyclerView>(Resource.Id.recyclerView);
 
