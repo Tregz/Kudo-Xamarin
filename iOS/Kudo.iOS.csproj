@@ -105,10 +105,6 @@
     <ImageAsset Include="Assets.xcassets\Second.imageset\tab_about.png" />
     <ImageAsset Include="Assets.xcassets\Second.imageset\tab_about%402x.png" />
     <ImageAsset Include="Assets.xcassets\Second.imageset\tab_about%403x.png" />
-    <ImageAsset Include="Assets.xcassets\XamarinLogo.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\XamarinLogo.imageset\xamarin_logo.png" />
-    <ImageAsset Include="Assets.xcassets\XamarinLogo.imageset\xamarin_logo%402x.png" />
-    <ImageAsset Include="Assets.xcassets\XamarinLogo.imageset\xamarin_logo%403x.png" />
     <ImageAsset Include="Assets.xcassets\Contents.json" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon_1024.png" />
@@ -151,6 +147,13 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon_29.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon_60.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon_20.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\xamarin_logo.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\xamarin_logo%402x.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\xamarin_logo%403x.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\AppIcon_120.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\AppIcon_120-1.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\AppIcon_120-2.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Item\SoloItemController.cs" />
@@ -182,8 +185,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="Logo.storyboard" />
-    <InterfaceDefinition Include="Main.storyboard" />
+    <InterfaceDefinition Include="Views\Main.storyboard" />
+    <InterfaceDefinition Include="Views\Logo.storyboard" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets.xcassets\Logo.imageset\" />
+    <Folder Include="Views\" />
   </ItemGroup>
   <Import Project="..\Kudo\Kudo.projitems" Label="Shared" Condition="Exists('..\Kudo\Kudo.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
