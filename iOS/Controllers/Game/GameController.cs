@@ -2,12 +2,13 @@
 
 using UIKit;
 
-namespace Kudo.iOS.Controllers.Game
+namespace Kudo.iOS
 {
     public partial class GameController : UIViewController
     {
         public GameViewModel ViewModel { get; set; }
-        public GameController() : base("GameController", null)
+
+        public GameController(IntPtr handle) : base(handle)
         {
             ViewModel = new GameViewModel();
         }

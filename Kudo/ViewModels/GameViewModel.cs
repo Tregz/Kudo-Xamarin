@@ -1,5 +1,6 @@
 ﻿using System;
-namespace Kudo.ViewModels
+
+namespace Kudo
 {
     public class GameViewModel : BaseViewModel
     {

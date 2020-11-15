@@ -14,7 +14,7 @@ namespace Kudo.Droid
         /// </summary>
         protected override int LayoutResource => Resource.Layout.activity_item_details;
 
-        ItemDetailViewModel viewModel;
+        SoloViewModel viewModel;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -22,7 +22,7 @@ namespace Kudo.Droid
             var data = Intent.GetStringExtra("data");
 
             var item = Newtonsoft.Json.JsonConvert.DeserializeObject<Item>(data);
-            viewModel = new ItemDetailViewModel(item);
+            viewModel = new SoloViewModel(item);
 
             FindViewById<TextView>(Resource.Id.description).Text = item.Description;
 
