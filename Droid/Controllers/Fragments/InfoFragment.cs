@@ -10,7 +10,7 @@ namespace Kudo.Droid
         public static InfoFragment NewInstance() =>
             new InfoFragment { Arguments = new Bundle() };
 
-        public AboutViewModel ViewModel { get; set; }
+        public InfoViewModel ViewModel { get; set; }
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -24,7 +24,7 @@ namespace Kudo.Droid
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             var view = inflater.Inflate(Resource.Layout.fragment_info, container, false);
-            ViewModel = new AboutViewModel();
+            ViewModel = new InfoViewModel();
             learnMoreButton = view.FindViewById<Button>(Resource.Id.button_learn_more);
             return view;
         }

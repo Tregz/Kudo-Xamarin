@@ -29,7 +29,7 @@ namespace Kudo.Droid
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            ViewModel = new ItemsViewModel();
+            ViewModel = new ListViewModel();
 
             View view = inflater.Inflate(Resource.Layout.fragment_list, container, false);
             var recyclerView =

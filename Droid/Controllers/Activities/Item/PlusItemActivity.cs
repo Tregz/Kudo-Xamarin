@@ -7,13 +7,13 @@ using Android.Support.Design.Widget;
 
 namespace Kudo.Droid
 {
-    [Activity(Label = "AddItemActivity")]
+    [Activity(Label = "Add")]
     public class PlusItemActivity : Activity
     {
         FloatingActionButton saveButton;
         EditText title, description;
 
-        public ItemsViewModel ViewModel { get; set; }
+        public ListViewModel ViewModel { get; set; }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
