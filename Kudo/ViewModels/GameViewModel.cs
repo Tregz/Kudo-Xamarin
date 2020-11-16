@@ -14,58 +14,344 @@ namespace Kudo
             set { SetProperty(ref isTrue, value); }
         }
 
-        int[] digits = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-
-        int[,] grid = new int[8, 8];
-        int[,] grid0 = new int[2, 2];
-        int[,] grid1 = new int[2, 2];
-        int[,] grid2 = new int[2, 2];
-        int[,] grid3 = new int[2, 2];
-        int[,] grid4 = new int[2, 2];
-        int[,] grid5 = new int[2, 2];
-        int[,] grid6 = new int[2, 2];
+        // Sudoku grid: 81 numbers, 9x9
+        int[] digits = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         List<int[,]> list = new List<int[,]>();
-
         public List<int[,]> Grid
         {
-            get {
+            get
+            {
+                list = new List<int[,]>();
                 Random r = new Random();
-
                 for (int i = 0; i < 9; i++)
                 {
+                    Console.WriteLine("*** Grid " + i);
                     int[,] g = new int[3, 3];
                     List<int> numbers = digits.ToList();
-                    for (int j = 0; j < 9; j++)
+                    for (int row = 0; row < 3; row++)
                     {
-                        int random = numbers[r.Next(numbers.Count)];
-                        numbers.Remove(random);
-                        switch (j)
+                        for (int col = 0; col < 3; col++)
                         {
-                            case 0: case 1: case 2: g[0, j] = random;
-                                break;
-                            case 3: case 4: case 5: g[1, j-3] = random;
-                                break;
-                            default: g[2, j-6] = random;
-                                break;
+                            try
+                            {
+                                List<int> available = new List<int>(numbers);
+                                switch (i)
+                                {
+                                    case 8:
+                                        switch (col)
+                                        {
+                                            case 2:
+                                                available.Remove(list[5][0, 2]);
+                                                available.Remove(list[5][1, 2]);
+                                                available.Remove(list[5][2, 2]);
+                                                available.Remove(list[2][0, 2]);
+                                                available.Remove(list[2][1, 2]);
+                                                available.Remove(list[2][2, 2]);
+                                                break;
+                                            case 1:
+                                                available.Remove(list[5][0, 1]);
+                                                available.Remove(list[5][1, 1]);
+                                                available.Remove(list[5][2, 1]);
+                                                available.Remove(list[2][0, 1]);
+                                                available.Remove(list[2][1, 1]);
+                                                available.Remove(list[2][2, 1]);
+                                                break;
+                                            case 0:
+                                                available.Remove(list[5][0, 0]);
+                                                available.Remove(list[5][1, 0]);
+                                                available.Remove(list[5][2, 0]);
+                                                available.Remove(list[2][0, 0]);
+                                                available.Remove(list[2][1, 0]);
+                                                available.Remove(list[2][2, 0]);
+                                                break;
+                                        }
+                                        switch (row)
+                                        {
+                                            case 2:
+                                                available.Remove(list[7][2, 0]);
+                                                available.Remove(list[7][2, 1]);
+                                                available.Remove(list[7][2, 2]);
+                                                available.Remove(list[6][2, 0]);
+                                                available.Remove(list[6][2, 1]);
+                                                available.Remove(list[6][2, 2]);
+                                                break;
+                                            case 1:
+                                                available.Remove(list[7][1, 0]);
+                                                available.Remove(list[7][1, 1]);
+                                                available.Remove(list[7][1, 2]);
+                                                available.Remove(list[6][1, 0]);
+                                                available.Remove(list[6][1, 1]);
+                                                available.Remove(list[6][1, 2]);
+                                                break;
+                                            case 0:
+                                                available.Remove(list[7][0, 0]);
+                                                available.Remove(list[7][0, 1]);
+                                                available.Remove(list[7][0, 2]);
+                                                available.Remove(list[6][0, 0]);
+                                                available.Remove(list[6][0, 1]);
+                                                available.Remove(list[6][0, 2]);
+                                                break;
+                                        }
+                                        break;
+                                    case 7:
+                                        switch (col)
+                                        {
+                                            case 2:
+                                                available.Remove(list[4][0, 2]);
+                                                available.Remove(list[4][1, 2]);
+                                                available.Remove(list[4][2, 2]);
+                                                available.Remove(list[1][0, 2]);
+                                                available.Remove(list[1][1, 2]);
+                                                available.Remove(list[1][2, 2]);
+                                                break;
+                                            case 1:
+                                                available.Remove(list[4][0, 1]);
+                                                available.Remove(list[4][1, 1]);
+                                                available.Remove(list[4][2, 1]);
+                                                available.Remove(list[1][0, 1]);
+                                                available.Remove(list[1][1, 1]);
+                                                available.Remove(list[1][2, 1]);
+                                                break;
+                                            case 0:
+                                                available.Remove(list[4][0, 0]);
+                                                available.Remove(list[4][1, 0]);
+                                                available.Remove(list[4][2, 0]);
+                                                available.Remove(list[1][0, 0]);
+                                                available.Remove(list[1][1, 0]);
+                                                available.Remove(list[1][2, 0]);
+                                                break;
+                                        }
+                                        switch (row)
+                                        {
+                                            case 2:
+                                                available.Remove(list[6][2, 0]);
+                                                available.Remove(list[6][2, 1]);
+                                                available.Remove(list[6][2, 2]);
+                                                break;
+                                            case 1:
+                                                available.Remove(list[6][1, 0]);
+                                                available.Remove(list[6][1, 1]);
+                                                available.Remove(list[6][1, 2]);
+                                                break;
+                                            case 0:
+                                                available.Remove(list[6][0, 0]);
+                                                available.Remove(list[6][0, 1]);
+                                                available.Remove(list[6][0, 2]);
+                                                break;
+                                        }
+                                        break;
+                                    case 6:
+                                        switch (col)
+                                        {
+                                            case 2:
+                                                available.Remove(list[3][0, 2]);
+                                                available.Remove(list[3][1, 2]);
+                                                available.Remove(list[3][2, 2]);
+                                                available.Remove(list[0][0, 2]);
+                                                available.Remove(list[0][1, 2]);
+                                                available.Remove(list[0][2, 2]);
+                                                break;
+                                            case 1:
+                                                available.Remove(list[3][0, 1]);
+                                                available.Remove(list[3][1, 1]);
+                                                available.Remove(list[3][2, 1]);
+                                                available.Remove(list[0][0, 1]);
+                                                available.Remove(list[0][1, 1]);
+                                                available.Remove(list[0][2, 1]);
+                                                break;
+                                            case 0:
+                                                available.Remove(list[3][0, 0]);
+                                                available.Remove(list[3][1, 0]);
+                                                available.Remove(list[3][2, 0]);
+                                                available.Remove(list[0][0, 0]);
+                                                available.Remove(list[0][1, 0]);
+                                                available.Remove(list[0][2, 0]);
+                                                break;
+                                        }
+                                        break;
+                                    case 5:
+                                        switch (col)
+                                        {
+                                            case 2:
+                                                available.Remove(list[2][0, 2]);
+                                                available.Remove(list[2][1, 2]);
+                                                available.Remove(list[2][2, 2]);
+                                                break;
+                                            case 1:
+                                                available.Remove(list[2][0, 1]);
+                                                available.Remove(list[2][1, 1]);
+                                                available.Remove(list[2][2, 1]);
+                                                break;
+                                            case 0:
+                                                available.Remove(list[2][0, 0]);
+                                                available.Remove(list[2][1, 0]);
+                                                available.Remove(list[2][2, 0]);
+                                                break;
+                                        }
+                                        switch (row)
+                                        {
+                                            case 2:
+                                                available.Remove(list[4][2, 0]);
+                                                available.Remove(list[4][2, 1]);
+                                                available.Remove(list[4][2, 2]);
+                                                available.Remove(list[3][2, 0]);
+                                                available.Remove(list[3][2, 1]);
+                                                available.Remove(list[3][2, 2]);
+                                                break;
+                                            case 1:
+                                                available.Remove(list[4][1, 0]);
+                                                available.Remove(list[4][1, 1]);
+                                                available.Remove(list[4][1, 2]);
+                                                available.Remove(list[3][1, 0]);
+                                                available.Remove(list[3][1, 1]);
+                                                available.Remove(list[3][1, 2]);
+                                                break;
+                                            case 0:
+                                                available.Remove(list[4][0, 0]);
+                                                available.Remove(list[4][0, 1]);
+                                                available.Remove(list[4][0, 2]);
+                                                available.Remove(list[3][0, 0]);
+                                                available.Remove(list[3][0, 1]);
+                                                available.Remove(list[3][0, 2]);
+                                                break;
+                                        }
+                                        break;
+                                    case 4:
+                                        switch (col)
+                                        {
+                                            case 2:
+                                                available.Remove(list[1][0, 2]);
+                                                available.Remove(list[1][1, 2]);
+                                                available.Remove(list[1][2, 2]);
+                                                break;
+                                            case 1:
+                                                available.Remove(list[1][0, 1]);
+                                                available.Remove(list[1][1, 1]);
+                                                available.Remove(list[1][2, 1]);
+                                                break;
+                                            case 0:
+                                                available.Remove(list[1][0, 0]);
+                                                available.Remove(list[1][1, 0]);
+                                                available.Remove(list[1][2, 0]);
+                                                break;
+                                        }
+                                        switch (row)
+                                        {
+                                            case 2:
+                                                available.Remove(list[3][2, 0]);
+                                                available.Remove(list[3][2, 1]);
+                                                available.Remove(list[3][2, 2]);
+                                                break;
+                                            case 1:
+                                                available.Remove(list[3][1, 0]);
+                                                available.Remove(list[3][1, 1]);
+                                                available.Remove(list[3][1, 2]);
+                                                break;
+                                            case 0:
+                                                available.Remove(list[3][0, 0]);
+                                                available.Remove(list[3][0, 1]);
+                                                available.Remove(list[3][0, 2]);
+                                                break;
+                                        }
+                                        break;
+                                    case 3:
+                                        switch (col)
+                                        {
+                                            case 2:
+                                                available.Remove(list[0][0, 2]);
+                                                available.Remove(list[0][1, 2]);
+                                                available.Remove(list[0][2, 2]);
+                                                break;
+                                            case 1:
+                                                available.Remove(list[0][0, 1]);
+                                                available.Remove(list[0][1, 1]);
+                                                available.Remove(list[0][2, 1]);
+                                                break;
+                                            case 0:
+                                                available.Remove(list[0][0, 0]);
+                                                available.Remove(list[0][1, 0]);
+                                                available.Remove(list[0][2, 0]);
+                                                break;
+                                        }
+                                        break;
+                                    case 2:
+                                        switch (row)
+                                        {
+                                            case 2:
+                                                available.Remove(list[1][2, 0]);
+                                                available.Remove(list[1][2, 1]);
+                                                available.Remove(list[1][2, 2]);
+                                                available.Remove(list[0][2, 0]);
+                                                available.Remove(list[0][2, 1]);
+                                                available.Remove(list[0][2, 2]);
+                                                break;
+                                            case 1:
+                                                available.Remove(list[1][1, 0]);
+                                                available.Remove(list[1][1, 1]);
+                                                available.Remove(list[1][1, 2]);
+                                                available.Remove(list[0][1, 0]);
+                                                available.Remove(list[0][1, 1]);
+                                                available.Remove(list[0][1, 2]);
+                                                break;
+                                            case 0:
+                                                available.Remove(list[1][0, 0]);
+                                                available.Remove(list[1][0, 1]);
+                                                available.Remove(list[1][0, 2]);
+                                                available.Remove(list[0][0, 0]);
+                                                available.Remove(list[0][0, 1]);
+                                                available.Remove(list[0][0, 2]);
+                                                break;
+                                        }
+                                        break;
+                                    case 1:
+                                        switch (row)
+                                        {
+                                            case 2:
+                                                available.Remove(list[0][2, 0]);
+                                                available.Remove(list[0][2, 1]);
+                                                available.Remove(list[0][2, 2]);
+                                                break;
+                                            case 1:
+                                                available.Remove(list[0][1, 0]);
+                                                available.Remove(list[0][1, 1]);
+                                                available.Remove(list[0][1, 2]);
+                                                break;
+                                            case 0:
+                                                available.Remove(list[0][0, 0]);
+                                                available.Remove(list[0][0, 1]);
+                                                available.Remove(list[0][0, 2]);
+                                                break;
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+
+                                // Catching index out of range
+                                int random = available[r.Next(available.Count)];
+
+                                numbers.Remove(random);
+                                g[row, col] = random;
+                            }
+                            catch
+                            {
+                                // Restore removed numbers and try again
+                                numbers.Add(g[row, 0]);
+                                numbers.Add(g[row, 1]);
+                                numbers.Add(g[row, 2]);
+                                col = 0;
+                            }
                         }
                     }
                     list.Add(g);
                 }
-
-                /* for (int i = 0; i < 9; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        //int k = 9 * 1;
-                        grid[i, j] = (int) list[k][j];
-                        // TODO grid before
-                    }
-                } */
                 return list;
             }
         }
 
         public GameViewModel()
         {
-            Title = "Game";   
+            Title = "Game";
         }
     }
 }
