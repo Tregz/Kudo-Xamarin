@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 using UIKit;
 
 namespace Kudo.iOS
@@ -19,6 +19,18 @@ namespace Kudo.iOS
 
             Title = ViewModel.Title;
             AppNameLabel.Text = "Game";
+            List<int[,]> list = ViewModel.Grid;
+            String numbers = "";
+            foreach (int[,] grid in list)
+            {
+                foreach (int value in grid)
+                {
+                    numbers += value.ToString();
+                }
+                numbers += "-";
+            }
+            //AboutTextView.Text = ViewModel.IsTrue ? "True" :  "False";
+            AboutTextView.Text = numbers;
         }
     }
 }
