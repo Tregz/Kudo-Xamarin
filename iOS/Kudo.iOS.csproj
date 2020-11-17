@@ -182,6 +182,10 @@
     <Compile Include="Controllers\Game\GameController.designer.cs">
       <DependentUpon>GameController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\GameCell.cs" />
+    <Compile Include="Views\GameCell.designer.cs">
+      <DependentUpon>GameCell.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Entitlements.plist" />
