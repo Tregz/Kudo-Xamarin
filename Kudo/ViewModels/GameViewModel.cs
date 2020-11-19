@@ -1,19 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Kudo
 {
     public class GameViewModel : BaseViewModel
     {
-        // Test 1
-        bool isTrue = false;
-        public bool IsTrue
-        {
-            get { return isTrue; }
-            set { SetProperty(ref isTrue, value); }
-        }
-
         // Sudoku grid: 81 numbers, 9x9
         int[] digits = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         List<int[,]> list = new List<int[,]>();
@@ -21,24 +12,21 @@ namespace Kudo
         {
             get
             {
-
                 list = new List<int[,]>();
                 Random r = new Random();
+                int again = 0;
                 for (int i = 0; i < 9; i++)
                 {
-                    Console.WriteLine("*** Grid " + i);
-                    int[,] g = new int[3, 3];
-
-                    Boolean completed3x3 = false;
-                    int test = 0;
-                    int failures = 0;
+                    Console.WriteLine("* Grid " + i);
                     Boolean cancel = false;
+                    Boolean completed3x3 = false;
+                    int failures = 0;
+                    int[,] g = new int[3, 3];
+                    int i3x3 = 0;
                     while (!completed3x3)
                     {
-                        //g = new int[3, 3];
                         HashSet<int> numbers = new HashSet<int>(digits);
-
-                        int testRow = 0;
+                        int iRow = 0;
                         for (int row = 0; row < 3; row++)
                         {
                             Boolean completedRow = false;
@@ -47,118 +35,75 @@ namespace Kudo
                                 Boolean validRow = true;
                                 for (int col = 0; col < 3; col++)
                                 {
-                                    try
+                                    numbers.Print("Numbers");
+                                    List<int> a = new List<int>(numbers);
+                                    // Remove unavailable numbers
+                                    switch (i)
                                     {
-                                        List<int> available = new List<int>(numbers);
-                                        Console.WriteLine("Numbers: " + string.Join("-", numbers));
-                                        switch (i)
-                                        {
-                                            case 8:
-                                                available.Remove(list, 5, null, col);
-                                                available.Remove(list, 2, null, col);
-                                                available.Remove(list, 7, row, null);
-                                                available.Remove(list, 6, row, null);
-                                                break;
-                                            case 7:
-                                                available.Remove(list, 4, null, col);
-                                                available.Remove(list, 1, null, col);
-                                                available.Remove(list, 6, row, null);
-                                                break;
-                                            case 6:
-                                                available.Remove(list, 3, null, col);
-                                                available.Remove(list, 0, null, col);
-                                                break;
-                                            case 5:
-                                                available.Remove(list, 2, null, col);
-                                                available.Remove(list, 4, row, null);
-                                                available.Remove(list, 3, row, null);
-                                                break;
-                                            case 4:
-                                                available.Remove(list, 1, null, col);
-                                                available.Remove(list, 3, row, null);
-                                                break;
-                                            case 3:
-                                                available.Remove(list, 0, null, col);
-                                                break;
-                                            case 2:
-                                                available.Remove(list, 1, row, null);
-                                                available.Remove(list, 0, row, null);
-                                                break;
-                                            case 1:
-                                                available.Remove(list, 0, row, null);
-                                                break;
-                                            default:
-                                                break;
-                                        }
-
-                                        // Catching index out of range
-                                        Console.WriteLine("Available not empty: " + available.Count);
-                                        Console.WriteLine("Available: " + string.Join("-", available));
-                                        int random = available[r.Next(available.Count)];
-
+                                        case 8:
+                                            a.Remove(list, 5, null, col);
+                                            a.Remove(list, 2, null, col);
+                                            a.Remove(list, 7, row, null);
+                                            a.Remove(list, 6, row, null);
+                                            break;
+                                        case 7:
+                                            a.Remove(list, 4, null, col);
+                                            a.Remove(list, 1, null, col);
+                                            a.Remove(list, 6, row, null);
+                                            break;
+                                        case 6:
+                                            a.Remove(list, 3, null, col);
+                                            a.Remove(list, 0, null, col);
+                                            break;
+                                        case 5:
+                                            a.Remove(list, 2, null, col);
+                                            a.Remove(list, 4, row, null);
+                                            a.Remove(list, 3, row, null);
+                                            break;
+                                        case 4:
+                                            a.Remove(list, 1, null, col);
+                                            a.Remove(list, 3, row, null);
+                                            break;
+                                        case 3:
+                                            a.Remove(list, 0, null, col);
+                                            break;
+                                        case 2:
+                                            a.Remove(list, 1, row, null);
+                                            a.Remove(list, 0, row, null);
+                                            break;
+                                        case 1:
+                                            a.Remove(list, 0, row, null);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    a.Print("Available");
+                                    if (a.Count > 0)
+                                    {
+                                        int random = a[r.Next(a.Count)];
                                         numbers.Remove(random);
                                         g[row, col] = random;
 
-                                        if (i > 0 && row == 1 && col == 2) for (int value = 0; value < 3; value++) if (validRow)
-                                                {
-                                                    switch (i)
-                                                    {
-                                                        case 1:
-                                                        case 4:
-                                                        case 7:
-                                                            if (numbers.Contains(list[i - 1][row + 1, value])) validRow = false;
-                                                            break;
-                                                        case 2:
-                                                        case 5:
-                                                        case 8:
-                                                            if (numbers.Contains(list[i - 1][row + 1, value])) validRow = false;
-                                                            if (numbers.Contains(list[i - 2][row + 1, value])) validRow = false;
-                                                            break;
-                                                    }
+                                        // Check that second row is valid
+                                        if (row == 1 && col == 2 && validRow)
+                                            if (!row.IsValid(numbers, list, i))
+                                                validRow = false;
 
-                                                }
-
-                                        if (validRow && i > 1 && row == 1 && col == 2) for (int value = 0; value < 3; value++) if (validRow)
-                                                {
-                                                    switch (i)
-                                                    {
-                                                        case 5:
-                                                        case 4:
-                                                        case 3:
-                                                            int count012 = 0;
-                                                            if (numbers.Contains(list[i - 3][0, value])) count012++;
-                                                            if (numbers.Contains(list[i - 3][1, value])) count012++;
-                                                            if (numbers.Contains(list[i - 3][2, value])) count012++;
-                                                            if (count012 == 3) validRow = false;
-                                                            break;
-                                                        case 8:
-                                                        case 7:
-                                                        case 6:
-                                                            int count012345 = 0;
-                                                            if (numbers.Contains(list[i - 3][0, value])) count012345++;
-                                                            if (numbers.Contains(list[i - 3][1, value])) count012345++;
-                                                            if (numbers.Contains(list[i - 3][2, value])) count012345++;
-                                                            if (numbers.Contains(list[i - 6][0, value])) count012345++;
-                                                            if (numbers.Contains(list[i - 6][1, value])) count012345++;
-                                                            if (numbers.Contains(list[i - 6][2, value])) count012345++;
-                                                            if (count012345 == 3) validRow = false;
-                                                            break;
-                                                    }
-                                                }
                                         if (col == 2)
                                         {
                                             if (g[row, 0] == 0) validRow = false;
                                             if (g[row, 1] == 0) validRow = false;
                                             if (g[row, 2] == 0) validRow = false;
                                             if (validRow) completedRow = true;
-                                            else {
-                                                if (testRow++ > 5) {
+                                            else
+                                            {
+                                                if (iRow++ > 5)
+                                                {
                                                     completedRow = true;
                                                     if (row > 0) row--;
-                                                    testRow = 0;
-                                                    if (failures++ > 3) {
-                                                        list.RemoveAt(--i);
-                                                        --i;
+                                                    iRow = 0;
+                                                    if (failures++ > 3)
+                                                    {
                                                         cancel = true;
                                                         completed3x3 = true;
                                                         completedRow = true;
@@ -167,38 +112,36 @@ namespace Kudo
                                                 }
                                                 else if (i == 8)
                                                 {
-                                                    list.RemoveAt(--i);
-                                                    //list.RemoveAt(--i);
-                                                    --i;
                                                     cancel = true;
                                                     completed3x3 = true;
                                                     completedRow = true;
                                                 }
                                                 else
                                                 {
-                                                    // Restore removed numbers and try again
-                                                    if (g[row, 0] > 0) numbers.Add(g[row, 0]);
-                                                    if (g[row, 1] > 0) numbers.Add(g[row, 1]);
-                                                    if (g[row, 2] > 0) numbers.Add(g[row, 2]);
-                                                } 
+                                                    // Try again
+                                                    numbers.Restore(g, row);
+                                                }
                                             }
                                             if (row == 2)
                                             {
-                                                if (completedRow) completed3x3 = true;
-                                                else if (test++ > 10) completed3x3 = true;
+                                                if (completedRow)
+                                                    completed3x3 = true;
+                                                else if (i3x3++ > 10)
+                                                    completed3x3 = true;
                                             }
                                         }
                                     }
-                                    catch
-                                    {
-                                        Console.WriteLine("Error at grid " + i + " col " + col + " row " + row + " completed? " + completedRow + " testRow " + testRow);
+                                    else {
+                                        String error = "Error at grid " + i;
+                                        error += " col " + col + " row " + row;
+                                        error += " completed? " + completedRow;
+                                        error += " i3x3 " + i3x3;
+                                        error += " iRow " + iRow;
+                                        Console.WriteLine(error);
                                         if (col == 2 && row == 2)
                                         {
                                             if (i == 8)
                                             {
-                                                list.RemoveAt(--i);
-                                                //list.RemoveAt(--i);
-                                                --i;
                                                 cancel = true;
                                                 completed3x3 = true;
                                             }
@@ -206,45 +149,41 @@ namespace Kudo
                                         }
                                         else if (col == 2)
                                         {
-                                            if (testRow++ > 5) {
-                                                testRow = 0;
-                                                list.RemoveAt(--i);
-                                                --i;
-                                                cancel = true;
-                                                completed3x3 = true;
-                                                completedRow = true;
+                                            if (iRow++ < 5)
+                                            {
+                                                // Try again
+                                                numbers.Restore(g, row);
                                             }
                                             else
                                             {
-                                                if (g[row, 0] > 0) numbers.Add(g[row, 0]);
-                                                if (g[row, 1] > 0) numbers.Add(g[row, 1]);
-                                                if (g[row, 2] > 0) numbers.Add(g[row, 2]);
+                                                iRow = 0;
+                                                completedRow = true;
                                             }
                                         }
                                         else if (col == 1 && i == 8)
                                         {
-                                            list.RemoveAt(--i);
-                                            --i;
                                             cancel = true;
                                             completed3x3 = true;
                                         }
                                     }
-
                                 }
                             }
-                        }
-
-                        
+                        }                        
                     }
                     for (int row = 0; row < 3; row++)
-                    {
                         for (int col = 0; col < 3; col++)
-                        {
                             Console.Write(string.Format("{0} ", g[row, col]));
-                        }
                         Console.Write(Environment.NewLine + Environment.NewLine);
+                    if (cancel)
+                    {
+                        list.RemoveAt(--i);
+                        if (again++ > 5) {
+                            list.RemoveAt(--i);
+                            again = 0;
+                        }
+                        --i;
                     }
-                    if (!cancel) list.Add(g);
+                    else list.Add(g);
                 }
                 return list;
             }
@@ -260,10 +199,62 @@ namespace Kudo
 internal static class GameExtensions
 {
 
-    public static void Remove(this List<int> available, List<int[,]> list, int grid, int? row, int? line)
+    public static Boolean IsValid(this int r, HashSet<int> a, List<int[,]> b, int g) {
+    // Check that numbers for the next row should be valid
+        if (g > 0) for (int i = 0; i < 3; i++)
+        {
+
+            switch (g)
+            {
+                case 1:
+                case 4:
+                case 7:
+                    if (a.Contains(b[g - 1][r + 1, i])) return false;
+                    break;
+                case 2:
+                case 5:
+                case 8:
+                    if (a.Contains(b[g - 1][r + 1, i])) return false;
+                    else if (a.Contains(b[g - 2][r + 1, i])) return false;
+                    break;
+            }
+            int count = 0;
+            switch (g)
+            {
+                case 5:
+                case 4:
+                case 3:
+                    for (int j = 0; j < 3; j++)
+                        if (a.Contains(b[g - 3][j, i])) count++;
+                    if (count == 3) return false;
+                    break;
+                case 8:
+                case 7:
+                case 6:
+                    for (int j = 0; j < 3; j++)
+                    {
+                        if (a.Contains(b[g - 3][j, i])) count++;
+                        if (a.Contains(b[g - 6][j, i])) count++;
+                    }
+                    if (count == 3) return false;
+                    break;
+            }
+        }
+        return true;
+    }
+
+    public static void Print(this ICollection<int> c, String about)
     {
-        available.Remove(list[grid][row ?? 0, line ?? 0]);
-        available.Remove(list[grid][row ?? 1, line ?? 1]);
-        available.Remove(list[grid][row ?? 2, line ?? 2]);
+        Console.WriteLine(about + ": " + string.Join("-", c));
+    }
+
+    public static void Remove(this List<int> a, List<int[,]> b, int g, int? r, int? c)
+    {
+        for (int i = 0; i < 3; i++) a.Remove(b[g][r ?? i, c ?? i]);
+    }
+
+    public static void Restore(this ICollection<int> c, int[,] g, int r)
+    {
+        for (int i = 0; i < 3; i++) if (g[r, i] > 0) c.Add(g[r, i]);
     }
 }
