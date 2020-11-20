@@ -21,6 +21,7 @@ namespace Kudo
                 Random random = new Random();
                 int again = 0;
                 int stuck = 0;
+                int fails = 0;
                 for (int i = 0; i < 9; i++)
                 {
                     Console.WriteLine("* Grid " + i);
@@ -103,6 +104,7 @@ namespace Kudo
                                             if (validRow) completedRow = true;
                                             else
                                             {
+                                                fails++;
                                                 if (iRow++ > 5)
                                                 {
                                                     completedRow = true;
@@ -137,7 +139,9 @@ namespace Kudo
                                             }
                                         }
                                     }
-                                    else {
+                                    else
+                                    {
+                                        fails++;
                                         String error = "Error at grid " + i;
                                         error += " col " + col + " row " + row;
                                         error += " completed? " + completedRow;
@@ -166,7 +170,7 @@ namespace Kudo
                                                 completedRow = true;
                                             }
                                         }
-                                        else if (i > 6)
+                                        else if (i > 6 || fails > 100)
                                         {
                                             cancel = true;
                                             completedRow = true;
@@ -193,7 +197,8 @@ namespace Kudo
                     }
                     else Soluce.Add(g);
                 }
-                return Soluce;
+                if (fails < 100) return Soluce;
+                else return Sudoku;
             }
         }
 

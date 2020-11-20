@@ -23,12 +23,7 @@ namespace Kudo.iOS
         {
             base.ViewDidLoad();
             Title = ViewModel.Title;
-            Grid.Delegate = new GridDelegate(this);
-        }
-
-        public override void ViewDidAppear(bool animated)
-        {
-            base.ViewDidAppear(animated);
+            Grid.Delegate = new GridDelegate();
             Start(false);
         }
 
@@ -38,9 +33,7 @@ namespace Kudo.iOS
             Soluce = ViewModel.Sudoku;
             Answers = new List<int[,]>();
             for (int i = 0; i < 9; i++) Answers.Add(new int[3, 3]);
-            List<int[,]> puzzle = ViewModel.Puzzle;
-            Grid.DataSource = new GridDataSource(ViewModel, puzzle, this);
-            //Grid.LayoutIfNeeded();
+            Grid.DataSource = new GridDataSource(ViewModel.Puzzle, this);
         }
 
         private void ValidateResult(Boolean success)
@@ -92,14 +85,12 @@ namespace Kudo.iOS
     class GridDataSource : UICollectionViewSource
     {
 
-        private GameViewModel viewModel;
-        private List<int[,]> list;
-        private GameController.OnAnswerListener listener;
+        private readonly List<int[,]> puzzle;
+        private readonly GameController.OnAnswerListener listener;
 
-        public GridDataSource(GameViewModel viewModel, List<int[,]> list, GameController.OnAnswerListener listener)
+        public GridDataSource(List<int[,]> puzzle, GameController.OnAnswerListener listener)
         {
-            this.viewModel = viewModel;
-            this.list = list;
+            this.puzzle = puzzle;
             this.listener = listener;
         }
 
@@ -110,7 +101,7 @@ namespace Kudo.iOS
 
         public override nint GetItemsCount(UICollectionView collectionView, nint section)
         {
-            return list.Count;
+            return puzzle.Count;
         }
 
         public UIView HorizontalBorder()
@@ -152,7 +143,7 @@ namespace Kudo.iOS
             cell.ContentView.AddSubview(vsv1);
 
             int i = 0;
-            foreach (int value in list[indexPath.Row])
+            foreach (int value in puzzle[indexPath.Row])
             {
                 UIView tx;
                 if (value > 0)
@@ -232,11 +223,9 @@ namespace Kudo.iOS
 
     public class GridDelegate : UICollectionViewDelegateFlowLayout
     {
-        private UIViewController controller;
 
-        public GridDelegate(UIViewController controller)
+        public GridDelegate()
         {
-            this.controller = controller;
         }
 
         public override CoreGraphics.CGSize GetSizeForItem(UICollectionView collectionView, UICollectionViewLayout layout, Foundation.NSIndexPath indexPath)
