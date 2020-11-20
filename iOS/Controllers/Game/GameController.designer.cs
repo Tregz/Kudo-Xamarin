@@ -36,6 +36,10 @@ namespace Kudo.iOS
         [Action ("ReadMoreButton_TouchUpInside:")]
         partial void ReadMoreButton_TouchUpInside (UIKit.UIButton sender);
 
+
+        [Action ("Validate:")]
+        partial void Validate (UIKit.UIButton sender);
+
         void ReleaseDesignerOutlets ()
         {
             if (AboutImageView != null) {

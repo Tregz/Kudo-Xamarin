@@ -4,12 +4,15 @@ using UIKit;
 
 namespace Kudo.iOS
 {
-    public partial class GameController : UIViewController
+    public partial class GameController : UIViewController, GameController.OnAnswerListener
     {
 
         public static readonly string CellIdentifier = "GameCell";
 
         public GameViewModel ViewModel { get; set; }
+
+        public List<int[,]> Soluce { get; set; }
+        public List<int[,]> Answers { get; set; }
 
         public GameController(IntPtr handle) : base(handle)
         {
@@ -19,39 +22,85 @@ namespace Kudo.iOS
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
             Title = ViewModel.Title;
-            AppNameLabel.Text = "Game";
-            List<int[,]> list = ViewModel.Sudoku;
-            String numbers = "";
-            foreach (int[,] grid in list)
-            {
+            Grid.Delegate = new GridDelegate(this);
+        }
+
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+            Start(false);
+        }
+
+        private void Start(Boolean reload)
+        {
+            if (reload) Grid.DataSource.Dispose();
+            Soluce = ViewModel.Sudoku;
+            Answers = new List<int[,]>();
+            for (int i = 0; i < 9; i++) Answers.Add(new int[3, 3]);
+            List<int[,]> puzzle = ViewModel.Puzzle;
+            Grid.DataSource = new GridDataSource(ViewModel, puzzle, this);
+            //Grid.LayoutIfNeeded();
+        }
+
+        private void ValidateResult(Boolean success)
+        {
+            String message = success ? "Success!" : "Failure!";
+            var alert = UIAlertController.Create("Validation", message, UIAlertControllerStyle.Alert);
+            alert.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
+            alert.AddAction(UIAlertAction.Create("Restart", UIAlertActionStyle.Destructive, (action) => Start(true)));
+            PresentViewController(alert, true, null);
+        }
+
+        partial void Validate(UIButton sender)
+        {
+            int validatedCount = 0;
+            int i = 0;
+            foreach (int[,] grid in Answers) {
+                int pos = 0;
                 foreach (int value in grid)
                 {
-                    numbers += value.ToString();
+                    if (value > 0)
+                    {
+                        int col = pos;
+                        int row = 0;
+                        while (col > 2)
+                        {
+                            col -= 3;
+                            row++;
+                        }
+                        if (value == Soluce[i][row, col]) validatedCount++;
+                    }
+                    pos++;
                 }
-                numbers += "-";
+                i++;
             }
-            //AboutTextView.Text = ViewModel.IsTrue ? "True" :  "False";
-            AboutTextView.Text = numbers;
+            ValidateResult(validatedCount == ViewModel.HiddenCount);
+        }
 
-            Grid.Delegate = new GridDelegate(this);
-            Grid.DataSource = new GridDataSource(ViewModel, list);
+        void OnAnswerListener.OnAnswer(int grid, int row, int col, int value)
+        {
+            Answers[grid][row, col] = value;
+        }
 
+        public interface OnAnswerListener
+        {
+            void OnAnswer(int grid, int row, int col, int value);
         }
     }
 
     class GridDataSource : UICollectionViewSource
     {
-        //static readonly NSString CELL_IDENTIFIER = new NSString("ITEM_CELL");
 
-        GameViewModel viewModel;
-        List<int[,]> list;
+        private GameViewModel viewModel;
+        private List<int[,]> list;
+        private GameController.OnAnswerListener listener;
 
-        public GridDataSource(GameViewModel viewModel, List<int[,]> list)
+        public GridDataSource(GameViewModel viewModel, List<int[,]> list, GameController.OnAnswerListener listener)
         {
             this.viewModel = viewModel;
             this.list = list;
+            this.listener = listener;
         }
 
         public override nint NumberOfSections(UICollectionView collectionView)
@@ -64,75 +113,95 @@ namespace Kudo.iOS
             return list.Count;
         }
 
+        public UIView HorizontalBorder()
+        {
+            UIView border = new UIView();
+            border.HeightAnchor.ConstraintEqualTo(3).Active = true;
+            border.BackgroundColor = UIColor.Orange;
+            return border;
+        }
+
+        public UIView VerticalBorder()
+        {
+            UIView border = new UIView();
+            border.WidthAnchor.ConstraintEqualTo(2).Active = true;
+            border.BackgroundColor = UIColor.Orange;
+            return border;
+        }
+
         public override UICollectionViewCell GetCell(UICollectionView collectionView, Foundation.NSIndexPath indexPath) {
             UICollectionViewCell cell = collectionView.DequeueReusableCell(GameController.CellIdentifier, indexPath) as UICollectionViewCell;
-            cell.BackgroundColor = UIColor.Red;
+            foreach (UIView subView in cell.ContentView.Subviews) subView.RemoveFromSuperview();
+
             UIStackView vsv1 = new UIStackView();
-            //vsv1.BackgroundColor = UIColor.Orange;
             vsv1.Axis = UILayoutConstraintAxis.Vertical;
             vsv1.Distribution = UIStackViewDistribution.EqualSpacing;
             vsv1.Frame = cell.Bounds;
             nfloat rowWidth = vsv1.Frame.Size.Width;
-            nfloat rowHeight = vsv1.Frame.Size.Height / 3;
-            UIStackView hsv1 = new UIStackView();
-            //hsv1.BackgroundColor = UIColor.Green;
-            hsv1.Axis = UILayoutConstraintAxis.Horizontal;
-            hsv1.Distribution = UIStackViewDistribution.EqualSpacing;
-            //hsv1.Alignment = UIStackViewAlignment.Center;
-            hsv1.WidthAnchor.ConstraintEqualTo(rowWidth).Active = true;
-            hsv1.HeightAnchor.ConstraintEqualTo(rowHeight).Active = true;
-            //horizontal1StackView.TranslatesAutoresizingMaskIntoConstraints = false;
-            UIStackView hsv2 = new UIStackView();
-            //hsv2.BackgroundColor = UIColor.Purple;
-            hsv2.Axis = UILayoutConstraintAxis.Horizontal;
-            //horizontal2StackView.Alignment = UIStackViewAlignment.Fill;
-            hsv2.Distribution = UIStackViewDistribution.EqualSpacing;
-            hsv2.WidthAnchor.ConstraintEqualTo(rowWidth).Active = true;
-            hsv2.HeightAnchor.ConstraintEqualTo(rowHeight).Active = true;
-            //horizontal2StackView.TranslatesAutoresizingMaskIntoConstraints = false;
-            UIStackView hsv3 = new UIStackView();
-            hsv3.Axis = UILayoutConstraintAxis.Horizontal;
-            //hsv3.BackgroundColor = UIColor.Blue;
-            //horizontal3StackView.Alignment = UIStackViewAlignment.Fill;
-            hsv3.Distribution = UIStackViewDistribution.EqualSpacing;
-            hsv3.WidthAnchor.ConstraintEqualTo(rowWidth).Active = true;
-            hsv3.HeightAnchor.ConstraintEqualTo(rowHeight).Active = true;
-            //horizontal3StackView.TranslatesAutoresizingMaskIntoConstraints = false;
+            nfloat rowHeight = (vsv1.Frame.Size.Height / 3) - 4;
+            UIStackView hsv1 = HorizontalStackView(rowWidth, rowHeight);
+            UIStackView hsv2 = HorizontalStackView(rowWidth, rowHeight);
+            UIStackView hsv3 = HorizontalStackView(rowWidth, rowHeight);
+            vsv1.AddArrangedSubview(HorizontalBorder());
             vsv1.AddArrangedSubview(hsv1);
+            vsv1.AddArrangedSubview(HorizontalBorder());
             vsv1.AddArrangedSubview(hsv2);
+            vsv1.AddArrangedSubview(HorizontalBorder());
             vsv1.AddArrangedSubview(hsv3);
-            //cell.ContentView.AddSubview(verticalStackView);
+            vsv1.AddArrangedSubview(HorizontalBorder());
             cell.ContentView.AddSubview(vsv1);
 
             int i = 0;
             foreach (int value in list[indexPath.Row])
             {
-
-                UITextView textView = new UITextView();
-                textView.Text = value.ToString();
-                textView.TextAlignment = UITextAlignment.Center;
+                UIView tx;
+                if (value > 0)
+                {
+                    tx = new UILabel();
+                    (tx as UILabel).Text = value.ToString();
+                    (tx as UILabel).TextAlignment = UITextAlignment.Center;
+                    (tx as UILabel).AdjustsFontSizeToFitWidth = true;
+                    //(tx as UILabel).Font = (tx as UITextView).Font.WithSize(19f);
+                }
+                else
+                {
+                    tx = new UITextField();
+                    (tx as UITextField).TextAlignment = UITextAlignment.Center;
+                    (tx as UITextField).KeyboardType = UIKeyboardType.DecimalPad;
+                    (tx as UITextField).ShouldChangeCharacters = (textField, range, replacementString) => {
+                        var newLength = textField.Text.Length + replacementString.Length - range.Length;
+                        return newLength <= 1;
+                    };
+                    int col = i;
+                    int row = 0;
+                    while (col > 2)
+                    {
+                        row += 1;
+                        col -= 3;
+                    }
+                    (tx as UITextField).EditingChanged += (s, e) =>
+                    {                        
+                        int digit = int.Parse((s as UITextField).Text.ToString());
+                        int[,] dimension = new int[row, col];
+                        listener.OnAnswer(indexPath.Row, row, col, digit);
+                    };
+                }
                 switch (i++)
                 {
                     case 0:
                     case 1:
                     case 2:
-                        textView.WidthAnchor.ConstraintEqualTo(rowWidth / 4).Active = true;
-                        textView.HeightAnchor.ConstraintEqualTo(rowHeight).Active = true;
-                        hsv1.AddArrangedSubview(textView);
+                        AddArrangedSubCell(hsv1, tx, rowWidth / 3, rowHeight);
                         break;
                     case 3:
                     case 4:
                     case 5:
-                        textView.WidthAnchor.ConstraintEqualTo(rowWidth / 4).Active = true;
-                        textView.HeightAnchor.ConstraintEqualTo(rowHeight).Active = true;
-                        hsv2.AddArrangedSubview(textView);
+                        AddArrangedSubCell(hsv2, tx, rowWidth / 3, rowHeight);
                         break;
                     case 6:
                     case 7:
                     case 8:
-                        textView.WidthAnchor.ConstraintEqualTo(rowWidth / 4).Active = true;
-                        textView.HeightAnchor.ConstraintEqualTo(rowHeight).Active = true;
-                        hsv3.AddArrangedSubview(textView);
+                        AddArrangedSubCell(hsv3, tx, rowWidth / 3, rowHeight);
                         break;
                     default:
                         break;
@@ -141,6 +210,24 @@ namespace Kudo.iOS
             return cell;
         }
 
+        private UIStackView HorizontalStackView(nfloat w, nfloat h)
+        {
+            UIStackView view = new UIStackView();
+            view.Axis = UILayoutConstraintAxis.Horizontal;
+            view.Distribution = UIStackViewDistribution.EqualSpacing;
+            view.WidthAnchor.ConstraintEqualTo(w).Active = true;
+            view.HeightAnchor.ConstraintEqualTo(h).Active = true;
+            return view;
+        }
+
+        private void AddArrangedSubCell(UIStackView sv, UIView tx, nfloat w, nfloat h)
+        {
+            tx.WidthAnchor.ConstraintEqualTo(w - 4).Active = true;
+            tx.HeightAnchor.ConstraintEqualTo(h).Active = true;
+            sv.AddArrangedSubview(VerticalBorder());
+            sv.AddArrangedSubview(tx);
+            sv.AddArrangedSubview(VerticalBorder());
+        }
     }
 
     public class GridDelegate : UICollectionViewDelegateFlowLayout
@@ -155,7 +242,8 @@ namespace Kudo.iOS
         public override CoreGraphics.CGSize GetSizeForItem(UICollectionView collectionView, UICollectionViewLayout layout, Foundation.NSIndexPath indexPath)
         {
             CoreGraphics.CGRect screenRect = UIScreen.MainScreen.Bounds;
-            return new CoreGraphics.CGSize(width: (screenRect.Size.Width/3)-10, height: 70.0);
+            nfloat size = ((screenRect.Size.Width - 80f) / 3);
+            return new CoreGraphics.CGSize(width: size, height: size);
         }
     }
 }

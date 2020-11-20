@@ -5,16 +5,22 @@ namespace Kudo
 {
     public class GameViewModel : BaseViewModel
     {
+        public int HiddenCount { get; set; }
+        private readonly int[] digits = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        private List<int[,]> Incomplete { get; set; }
+        private List<int[,]> Soluce { get; set; }
+        private Boolean Debug { get; set; }
+
         // Sudoku grid: 81 numbers, 9x9
-        int[] digits = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-        List<int[,]> list = new List<int[,]>();
         public List<int[,]> Sudoku
         {
             get
             {
-                list = new List<int[,]>();
-                Random r = new Random();
+                Debug = false;
+                Soluce = new List<int[,]>();
+                Random random = new Random();
                 int again = 0;
+                int stuck = 0;
                 for (int i = 0; i < 9; i++)
                 {
                     Console.WriteLine("* Grid " + i);
@@ -35,58 +41,58 @@ namespace Kudo
                                 Boolean validRow = true;
                                 for (int col = 0; col < 3; col++)
                                 {
-                                    numbers.Print("Numbers");
+                                    if (Debug) numbers.Print("Numbers");
                                     List<int> a = new List<int>(numbers);
                                     // Remove unavailable numbers
                                     switch (i)
                                     {
                                         case 8:
-                                            a.Remove(list, 5, null, col);
-                                            a.Remove(list, 2, null, col);
-                                            a.Remove(list, 7, row, null);
-                                            a.Remove(list, 6, row, null);
+                                            a.Remove(Soluce, 5, null, col);
+                                            a.Remove(Soluce, 2, null, col);
+                                            a.Remove(Soluce, 7, row, null);
+                                            a.Remove(Soluce, 6, row, null);
                                             break;
                                         case 7:
-                                            a.Remove(list, 4, null, col);
-                                            a.Remove(list, 1, null, col);
-                                            a.Remove(list, 6, row, null);
+                                            a.Remove(Soluce, 4, null, col);
+                                            a.Remove(Soluce, 1, null, col);
+                                            a.Remove(Soluce, 6, row, null);
                                             break;
                                         case 6:
-                                            a.Remove(list, 3, null, col);
-                                            a.Remove(list, 0, null, col);
+                                            a.Remove(Soluce, 3, null, col);
+                                            a.Remove(Soluce, 0, null, col);
                                             break;
                                         case 5:
-                                            a.Remove(list, 2, null, col);
-                                            a.Remove(list, 4, row, null);
-                                            a.Remove(list, 3, row, null);
+                                            a.Remove(Soluce, 2, null, col);
+                                            a.Remove(Soluce, 4, row, null);
+                                            a.Remove(Soluce, 3, row, null);
                                             break;
                                         case 4:
-                                            a.Remove(list, 1, null, col);
-                                            a.Remove(list, 3, row, null);
+                                            a.Remove(Soluce, 1, null, col);
+                                            a.Remove(Soluce, 3, row, null);
                                             break;
                                         case 3:
-                                            a.Remove(list, 0, null, col);
+                                            a.Remove(Soluce, 0, null, col);
                                             break;
                                         case 2:
-                                            a.Remove(list, 1, row, null);
-                                            a.Remove(list, 0, row, null);
+                                            a.Remove(Soluce, 1, row, null);
+                                            a.Remove(Soluce, 0, row, null);
                                             break;
                                         case 1:
-                                            a.Remove(list, 0, row, null);
+                                            a.Remove(Soluce, 0, row, null);
                                             break;
                                         default:
                                             break;
                                     }
-                                    a.Print("Available");
+                                    if (Debug) a.Print("Available");
                                     if (a.Count > 0)
                                     {
-                                        int random = a[r.Next(a.Count)];
-                                        numbers.Remove(random);
-                                        g[row, col] = random;
+                                        int value = a[random.Next(a.Count)];
+                                        numbers.Remove(value);
+                                        g[row, col] = value;
 
                                         // Check that second row is valid
                                         if (row == 1 && col == 2 && validRow)
-                                            if (!row.IsValid(numbers, list, i))
+                                            if (!IsValidRow(numbers, Soluce, i, row))
                                                 validRow = false;
 
                                         if (col == 2)
@@ -137,7 +143,7 @@ namespace Kudo
                                         error += " completed? " + completedRow;
                                         error += " i3x3 " + i3x3;
                                         error += " iRow " + iRow;
-                                        Console.WriteLine(error);
+                                        if (Debug) Console.WriteLine(error);
                                         if (col == 2 && row == 2)
                                         {
                                             if (i == 8)
@@ -160,9 +166,10 @@ namespace Kudo
                                                 completedRow = true;
                                             }
                                         }
-                                        else if (col == 1 && i == 8)
+                                        else if (i > 6)
                                         {
                                             cancel = true;
+                                            completedRow = true;
                                             completed3x3 = true;
                                         }
                                     }
@@ -170,22 +177,96 @@ namespace Kudo
                             }
                         }                        
                     }
-                    for (int row = 0; row < 3; row++)
+                    if (Debug) for (int row = 0; row < 3; row++)
                         for (int col = 0; col < 3; col++)
                             Console.Write(string.Format("{0} ", g[row, col]));
                         Console.Write(Environment.NewLine + Environment.NewLine);
-                    if (cancel)
+                    // TODO restart when stuck
+                    if (cancel && stuck++ < 15)
                     {
-                        list.RemoveAt(--i);
+                        Soluce.RemoveAt(--i);
                         if (again++ > 5) {
-                            list.RemoveAt(--i);
+                            Soluce.RemoveAt(--i);
                             again = 0;
                         }
                         --i;
                     }
-                    else list.Add(g);
+                    else Soluce.Add(g);
                 }
-                return list;
+                return Soluce;
+            }
+        }
+
+        public List<int[,]> Puzzle
+        {
+            get
+            {
+                HiddenCount = 0;
+                Incomplete = new List<int[,]>();
+                foreach (int[,] grid in Soluce)
+                    Incomplete.Add(grid.Clone() as int[,]);
+                for (int i = 0; i < 1; i++) HideValue();
+                return Incomplete;
+            }
+        }
+
+        private Boolean IsValidRow(HashSet<int> a, List<int[,]> b, int g, int r)
+        {
+            // Check that numbers for the next row should be valid
+            if (g > 0) for (int i = 0; i < 3; i++)
+                {
+
+                    switch (g)
+                    {
+                        case 1:
+                        case 4:
+                        case 7:
+                            if (a.Contains(b[g - 1][r + 1, i])) return false;
+                            break;
+                        case 2:
+                        case 5:
+                        case 8:
+                            if (a.Contains(b[g - 1][r + 1, i])) return false;
+                            else if (a.Contains(b[g - 2][r + 1, i])) return false;
+                            break;
+                    }
+                    int count = 0;
+                    switch (g)
+                    {
+                        case 5:
+                        case 4:
+                        case 3:
+                            for (int j = 0; j < 3; j++)
+                                if (a.Contains(b[g - 3][j, i])) count++;
+                            if (count == 3) return false;
+                            break;
+                        case 8:
+                        case 7:
+                        case 6:
+                            for (int j = 0; j < 3; j++)
+                            {
+                                if (a.Contains(b[g - 3][j, i])) count++;
+                                if (a.Contains(b[g - 6][j, i])) count++;
+                            }
+                            if (count == 3) return false;
+                            break;
+                    }
+                }
+            return true;
+        }
+
+        private void HideValue()
+        {
+            Random random = new Random();
+            int grid = random.Next(5);
+            int row = random.Next(3);
+            int col = random.Next(3);
+            Incomplete[grid][row, col] = -1;
+            HiddenCount++;
+            if (grid != 4 || row != 1 || col != 1)
+            {
+                Incomplete[8 - grid][2 - row, 2 - col] = -1; // mirror
+                HiddenCount++;
             }
         }
 
@@ -198,50 +279,6 @@ namespace Kudo
 
 internal static class GameExtensions
 {
-
-    public static Boolean IsValid(this int r, HashSet<int> a, List<int[,]> b, int g) {
-    // Check that numbers for the next row should be valid
-        if (g > 0) for (int i = 0; i < 3; i++)
-        {
-
-            switch (g)
-            {
-                case 1:
-                case 4:
-                case 7:
-                    if (a.Contains(b[g - 1][r + 1, i])) return false;
-                    break;
-                case 2:
-                case 5:
-                case 8:
-                    if (a.Contains(b[g - 1][r + 1, i])) return false;
-                    else if (a.Contains(b[g - 2][r + 1, i])) return false;
-                    break;
-            }
-            int count = 0;
-            switch (g)
-            {
-                case 5:
-                case 4:
-                case 3:
-                    for (int j = 0; j < 3; j++)
-                        if (a.Contains(b[g - 3][j, i])) count++;
-                    if (count == 3) return false;
-                    break;
-                case 8:
-                case 7:
-                case 6:
-                    for (int j = 0; j < 3; j++)
-                    {
-                        if (a.Contains(b[g - 3][j, i])) count++;
-                        if (a.Contains(b[g - 6][j, i])) count++;
-                    }
-                    if (count == 3) return false;
-                    break;
-            }
-        }
-        return true;
-    }
 
     public static void Print(this ICollection<int> c, String about)
     {
