@@ -1,40 +1,61 @@
-﻿// WARNING
+// WARNING
 //
-// This file has been generated automatically by Xamarin Studio from the outlets and
-// actions declared in your storyboard file.
-// Manual changes to this file will not be maintained.
+// This file has been generated automatically by Visual Studio to store outlets and
+// actions made in the UI designer. If it is removed, they will be lost.
+// Manual changes to this file may not be handled correctly.
 //
 using Foundation;
-using System;
 using System.CodeDom.Compiler;
-using UIKit;
 
 namespace Kudo.iOS
 {
-    [Register("SoloItemController")]
-    partial class SoloItemController
-    {
-        [Outlet]
-        [GeneratedCode("iOS Designer", "1.0")]
-        UIKit.UILabel ItemDescriptionLabel { get; set; }
+	[Register ("SoloItemController")]
+	partial class SoloItemController
+	{
+		[Outlet]
+		UIKit.UILabel GameDescriptionLabel { get; set; }
 
-        [Outlet]
-        [GeneratedCode("iOS Designer", "1.0")]
-        UIKit.UILabel ItemNameLabel { get; set; }
+		[Outlet]
+		UIKit.UIPickerView GameLevelPicker { get; set; }
 
-        void ReleaseDesignerOutlets()
-        {
-            if (ItemDescriptionLabel != null)
-            {
-                ItemDescriptionLabel.Dispose();
-                ItemDescriptionLabel = null;
-            }
+		[Outlet]
+		UIKit.UIButton GameLoadButton { get; set; }
 
-            if (ItemNameLabel != null)
-            {
-                ItemNameLabel.Dispose();
-                ItemNameLabel = null;
-            }
-        }
-    }
+		[Outlet]
+		UIKit.UILabel GameNameLabel { get; set; }
+
+		[Outlet]
+		UIKit.UILabel GameSuccessesLabel { get; set; }
+
+		[Action ("GameLoadAction:")]
+		partial void GameLoadAction (UIKit.UIButton sender);
+		
+		void ReleaseDesignerOutlets ()
+		{
+			if (GameDescriptionLabel != null) {
+				GameDescriptionLabel.Dispose ();
+				GameDescriptionLabel = null;
+			}
+
+			if (GameLevelPicker != null) {
+				GameLevelPicker.Dispose ();
+				GameLevelPicker = null;
+			}
+
+			if (GameNameLabel != null) {
+				GameNameLabel.Dispose ();
+				GameNameLabel = null;
+			}
+
+			if (GameSuccessesLabel != null) {
+				GameSuccessesLabel.Dispose ();
+				GameSuccessesLabel = null;
+			}
+
+			if (GameLoadButton != null) {
+				GameLoadButton.Dispose ();
+				GameLoadButton = null;
+			}
+		}
+	}
 }

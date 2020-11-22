@@ -21,7 +21,7 @@ namespace Kudo.Droid
 
             var data = Intent.GetStringExtra("data");
 
-            var item = Newtonsoft.Json.JsonConvert.DeserializeObject<Item>(data);
+            var item = Newtonsoft.Json.JsonConvert.DeserializeObject<Game>(data);
             viewModel = new SoloViewModel(item);
 
             FindViewById<TextView>(Resource.Id.description).Text = item.Description;

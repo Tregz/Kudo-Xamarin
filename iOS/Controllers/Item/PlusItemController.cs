@@ -18,7 +18,7 @@ namespace Kudo.iOS
 
             btnSaveItem.TouchUpInside += (sender, e) =>
             {
-                var item = new Item
+                var item = new Game
                 {
                     Text = txtTitle.Text,
                     Description = txtDesc.Text

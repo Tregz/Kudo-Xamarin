@@ -7,7 +7,7 @@ namespace Kudo
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => ServiceLocator.Instance.Get<IDataStore<Item>>() ?? new MockDataStore();
+        public IDataStore<Game> DataStore => ServiceLocator.Instance.Get<IDataStore<Game>>() ?? new MockDataStore();
 
         bool isBusy = false;
         public bool IsBusy

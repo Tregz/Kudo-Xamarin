@@ -208,7 +208,7 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2252">
                                 <rect key="frame" x="728" y="10" width="86" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Add Item">
+                                <state key="normal" title="Add game">
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -244,13 +244,30 @@
                                 <color key="textColor" systemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Label" lineBreakMode="wordWrap" numberOfLines="0" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="1705">
-                                <rect key="frame" x="20" y="129" width="560" height="20"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="wordWrap" numberOfLines="0" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="1705">
+                                <rect key="frame" x="20" y="115" width="41.5" height="20.5"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" systemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w3g-Ad-XOy">
+                                <rect key="frame" x="20" y="136" width="794" height="216"/>
+                            </pickerView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Successes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmE-VX-4L8">
+                                <rect key="frame" x="712" y="351.5" width="82" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1V-8o-Sin">
+                                <rect key="frame" x="760" y="392.5" width="34" height="30"/>
+                                <state key="normal" title="Load"/>
+                                <connections>
+                                    <action selector="GameLoadAction:" destination="118" eventType="touchUpInside" id="E2y-i1-vzT"/>
+                                    <action selector="btnLoad:" destination="Qvm-Yh-ncb" eventType="touchUpInside" id="GT3-0b-r7m"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -258,15 +275,26 @@
                             <constraint firstItem="1702" firstAttribute="leading" secondItem="119" secondAttribute="leading" constant="20" id="2232"/>
                             <constraint firstItem="1705" firstAttribute="top" secondItem="1702" secondAttribute="bottom" constant="8" id="2233"/>
                             <constraint firstItem="1705" firstAttribute="leading" secondItem="119" secondAttribute="leading" constant="20" id="2234"/>
+                            <constraint firstItem="w3g-Ad-XOy" firstAttribute="leading" secondItem="119" secondAttribute="leading" constant="20" id="4wx-dQ-hqB"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="DmE-VX-4L8" secondAttribute="trailing" constant="20" id="Fgg-Ay-3E3"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="h1V-8o-Sin" secondAttribute="trailing" constant="20" id="OVN-4U-wDK"/>
+                            <constraint firstItem="DmE-VX-4L8" firstAttribute="top" secondItem="w3g-Ad-XOy" secondAttribute="bottom" id="WEm-Dt-ReW"/>
+                            <constraint firstAttribute="trailing" secondItem="w3g-Ad-XOy" secondAttribute="trailing" constant="20" id="ZHC-cq-1hv"/>
+                            <constraint firstItem="h1V-8o-Sin" firstAttribute="top" secondItem="DmE-VX-4L8" secondAttribute="bottom" constant="20" id="eb1-6b-jlH"/>
+                            <constraint firstItem="w3g-Ad-XOy" firstAttribute="top" secondItem="1705" secondAttribute="bottom" id="kPM-wa-R7L"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="200"/>
                     <connections>
-                        <outlet property="ItemDescriptionLabel" destination="1705" id="name-outlet-1705"/>
-                        <outlet property="ItemNameLabel" destination="1702" id="name-outlet-1702"/>
+                        <outlet property="GameDescriptionLabel" destination="1705" id="name-outlet-1705"/>
+                        <outlet property="GameLevelPicker" destination="w3g-Ad-XOy" id="b2t-6Y-033"/>
+                        <outlet property="GameLoadButton" destination="h1V-8o-Sin" id="ovr-IR-jf2"/>
+                        <outlet property="GameNameLabel" destination="1702" id="name-outlet-1702"/>
+                        <outlet property="GameSuccessesLabel" destination="DmE-VX-4L8" id="fuV-Vd-e0p"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="120" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Qvm-Yh-ncb" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2240" y="-776"/>
         </scene>
@@ -308,7 +336,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2352">
                                 <rect key="frame" x="30" y="206" width="784" height="30"/>
-                                <state key="normal" title="Save Item">
+                                <state key="normal" title="Save Game">
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>

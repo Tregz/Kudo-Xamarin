@@ -10,9 +10,9 @@ namespace Kudo
         public static void Initialize()
         {
             if (UseMockDataStore)
-                ServiceLocator.Instance.Register<IDataStore<Item>, MockDataStore>();
+                ServiceLocator.Instance.Register<IDataStore<Game>, MockDataStore>();
             else
-                ServiceLocator.Instance.Register<IDataStore<Item>, CloudDataStore>();
+                ServiceLocator.Instance.Register<IDataStore<Game>, CloudDataStore>();
         }
     }
 }

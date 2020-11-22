@@ -32,7 +32,7 @@ namespace Kudo.Droid
 
         void SaveButton_Click(object sender, EventArgs e)
         {
-            var item = new Item
+            var item = new Game
             {
                 Text = title.Text,
                 Description = description.Text

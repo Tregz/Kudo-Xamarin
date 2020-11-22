@@ -24,6 +24,14 @@ namespace Kudo.iOS
             base.ViewDidLoad();
             Title = ViewModel.Title;
             Grid.Delegate = new GridDelegate();
+        }
+
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+
+            if (ViewModel.Game == null)
+                ViewModel.LoadGameCommand.Execute(null);
             Start(false);
         }
 
@@ -38,6 +46,7 @@ namespace Kudo.iOS
 
         private void ValidateResult(Boolean success)
         {
+            if (success) ViewModel.Game.Successes += 1;
             String message = success ? "Success!" : "Failure!";
             var alert = UIAlertController.Create("Validation", message, UIAlertControllerStyle.Alert);
             alert.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));

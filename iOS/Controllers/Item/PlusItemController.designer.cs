@@ -1,50 +1,45 @@
-﻿// WARNING
+// WARNING
 //
-// This file has been generated automatically by Xamarin Studio from the outlets and
-// actions declared in your storyboard file.
-// Manual changes to this file will not be maintained.
+// This file has been generated automatically by Visual Studio to store outlets and
+// actions made in the UI designer. If it is removed, they will be lost.
+// Manual changes to this file may not be handled correctly.
 //
 using Foundation;
-using System;
 using System.CodeDom.Compiler;
-using UIKit;
 
 namespace Kudo.iOS
 {
-    [Register("PlusItemController")]
-    partial class PlusItemController
-    {
-        [Outlet]
-        [GeneratedCode("iOS Designer", "1.0")]
-        UIKit.UIButton btnSaveItem { get; set; }
+	[Register ("PlusItemController")]
+	partial class PlusItemController
+	{
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UIKit.UIButton btnSaveItem { get; set; }
 
-        [Outlet]
-        [GeneratedCode("iOS Designer", "1.0")]
-        UIKit.UITextField txtDesc { get; set; }
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UIKit.UITextField txtDesc { get; set; }
 
-        [Outlet]
-        [GeneratedCode("iOS Designer", "1.0")]
-        UIKit.UITextField txtTitle { get; set; }
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UIKit.UITextField txtTitle { get; set; }
+		
+		void ReleaseDesignerOutlets ()
+		{
+			if (btnSaveItem != null) {
+				btnSaveItem.Dispose ();
+				btnSaveItem = null;
+			}
 
-        void ReleaseDesignerOutlets()
-        {
-            if (btnSaveItem != null)
-            {
-                btnSaveItem.Dispose();
-                btnSaveItem = null;
-            }
+			if (txtDesc != null) {
+				txtDesc.Dispose ();
+				txtDesc = null;
+			}
 
-            if (txtDesc != null)
-            {
-                txtDesc.Dispose();
-                txtDesc = null;
-            }
-
-            if (txtTitle != null)
-            {
-                txtTitle.Dispose();
-                txtTitle = null;
-            }
-        }
-    }
+			if (txtTitle != null) {
+				txtTitle.Dispose ();
+				txtTitle = null;
+			}
+		}
+	}
 }

@@ -7,16 +7,16 @@ namespace Kudo
 {
     public class ListViewModel : BaseViewModel
     {
-        public ObservableCollection<Item> Items { get; set; }
+        public ObservableCollection<Game> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
         public Command AddItemCommand { get; set; }
 
         public ListViewModel()
         {
             Title = "Browse";
-            Items = new ObservableCollection<Item>();
+            Items = new ObservableCollection<Game>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            AddItemCommand = new Command<Item>(async (Item item) => await AddItem(item));
+            AddItemCommand = new Command<Game>(async (Game item) => await AddItem(item));
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -45,7 +45,7 @@ namespace Kudo
             }
         }
 
-        async Task AddItem(Item item)
+        async Task AddItem(Game item)
         {
             Items.Add(item);
             await DataStore.AddItemAsync(item);

@@ -4,8 +4,8 @@ namespace Kudo
 {
     public class SoloViewModel : BaseViewModel
     {
-        public Item Item { get; set; }
-        public SoloViewModel(Item item = null)
+        public Game Item { get; set; }
+        public SoloViewModel(Game item = null)
         {
             if (item != null)
             {

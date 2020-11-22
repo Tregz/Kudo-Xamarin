@@ -1,15 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace Kudo
 {
     public class GameViewModel : BaseViewModel
     {
+        public Game Game { get; set; }
         public int HiddenCount { get; set; }
         private readonly int[] digits = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         private List<int[,]> Incomplete { get; set; }
         private List<int[,]> Soluce { get; set; }
         private Boolean Debug { get; set; }
+        public Command LoadGameCommand { get; set; }
+
+        public GameViewModel()
+        {
+            Title = "Game";
+            LoadGameCommand = new Command(async () => await ExecuteLoadGameCommand());
+        }
+
+        async Task ExecuteLoadGameCommand()
+        {
+            if (IsBusy) return;
+
+            IsBusy = true;
+
+            try
+            {
+                String id = Preferences.Get("game", "0");
+                Game = await DataStore.GetItemAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
 
         // Sudoku grid: 81 numbers, 9x9
         public List<int[,]> Sudoku
@@ -24,7 +55,7 @@ namespace Kudo
                 int fails = 0;
                 for (int i = 0; i < 9; i++)
                 {
-                    Console.WriteLine("* Grid " + i);
+                    if (Debug) Console.WriteLine("Create grid " + i);
                     Boolean cancel = false;
                     Boolean completed3x3 = false;
                     int failures = 0;
@@ -42,9 +73,10 @@ namespace Kudo
                                 Boolean validRow = true;
                                 for (int col = 0; col < 3; col++)
                                 {
+                                    // Numbers left t
                                     if (Debug) numbers.Print("Numbers");
                                     List<int> a = new List<int>(numbers);
-                                    // Remove unavailable numbers
+                                    // Remove unavailable numbers from list a
                                     switch (i)
                                     {
                                         case 8:
@@ -142,12 +174,13 @@ namespace Kudo
                                     else
                                     {
                                         fails++;
-                                        String error = "Error at grid " + i;
-                                        error += " col " + col + " row " + row;
-                                        error += " completed? " + completedRow;
-                                        error += " i3x3 " + i3x3;
-                                        error += " iRow " + iRow;
-                                        if (Debug) Console.WriteLine(error);
+                                        if (Debug)
+                                        {
+                                            String error = "Error in grid " + i;
+                                            error += " at row " + row + ",";
+                                            error += " column " + col + ".";
+                                            Console.WriteLine(error);
+                                        }
                                         if (col == 2 && row == 2)
                                         {
                                             if (i == 8)
@@ -185,7 +218,6 @@ namespace Kudo
                         for (int col = 0; col < 3; col++)
                             Console.Write(string.Format("{0} ", g[row, col]));
                         Console.Write(Environment.NewLine + Environment.NewLine);
-                    // TODO restart when stuck
                     if (cancel && stuck++ < 15)
                     {
                         Soluce.RemoveAt(--i);
@@ -210,7 +242,20 @@ namespace Kudo
                 Incomplete = new List<int[,]>();
                 foreach (int[,] grid in Soluce)
                     Incomplete.Add(grid.Clone() as int[,]);
-                for (int i = 0; i < 1; i++) HideValue();
+                int hiddens = 6;
+                if (Game != null) switch (Game.Level)
+                {
+                    case 0:
+                        hiddens = 6;
+                        break;
+                    case 1:
+                        hiddens = 12;
+                        break;
+                    case 2:
+                        hiddens = 18;
+                        break;
+                }
+                for (int i = 0; i < hiddens; i++) HideValue();
                 return Incomplete;
             }
         }
@@ -220,7 +265,6 @@ namespace Kudo
             // Check that numbers for the next row should be valid
             if (g > 0) for (int i = 0; i < 3; i++)
                 {
-
                     switch (g)
                     {
                         case 1:
@@ -273,11 +317,6 @@ namespace Kudo
                 Incomplete[8 - grid][2 - row, 2 - col] = -1; // mirror
                 HiddenCount++;
             }
-        }
-
-        public GameViewModel()
-        {
-            Title = "Game";
         }
     }
 }
