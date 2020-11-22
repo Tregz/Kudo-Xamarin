@@ -44,10 +44,10 @@
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.CurrentActivity">
-      <HintPath>..\packages\Plugin.CurrentActivity.1.0.1\lib\MonoAndroid10\Plugin.CurrentActivity.dll</HintPath>
+      <HintPath>..\packages\Plugin.CurrentActivity.2.1.0.4\lib\monoandroid44\Plugin.CurrentActivity.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Android.Support.Annotations">
       <HintPath>..\packages\Xamarin.Android.Support.Annotations.28.0.0.3\lib\monoandroid90\Xamarin.Android.Support.Annotations.dll</HintPath>
@@ -68,16 +68,16 @@
       <HintPath>..\packages\Xamarin.Android.Support.CustomTabs.28.0.0.3\lib\monoandroid90\Xamarin.Android.Support.CustomTabs.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.Share.Abstractions">
-      <HintPath>..\packages\Plugin.Share.7.0.1\lib\MonoAndroid10\Plugin.Share.Abstractions.dll</HintPath>
+      <HintPath>..\packages\Plugin.Share.7.1.1\lib\MonoAndroid10\Plugin.Share.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.Share">
-      <HintPath>..\packages\Plugin.Share.7.0.1\lib\MonoAndroid10\Plugin.Share.dll</HintPath>
+      <HintPath>..\packages\Plugin.Share.7.1.1\lib\MonoAndroid10\Plugin.Share.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.Connectivity.Abstractions">
-      <HintPath>..\packages\Xam.Plugin.Connectivity.3.0.2\lib\MonoAndroid10\Plugin.Connectivity.Abstractions.dll</HintPath>
+      <HintPath>..\packages\Xam.Plugin.Connectivity.3.2.0\lib\MonoAndroid10\Plugin.Connectivity.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.Connectivity">
-      <HintPath>..\packages\Xam.Plugin.Connectivity.3.0.2\lib\MonoAndroid10\Plugin.Connectivity.dll</HintPath>
+      <HintPath>..\packages\Xam.Plugin.Connectivity.3.2.0\lib\MonoAndroid10\Plugin.Connectivity.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Android.Support.Vector.Drawable">
       <HintPath>..\packages\Xamarin.Android.Support.Vector.Drawable.28.0.0.3\lib\monoandroid90\Xamarin.Android.Support.Vector.Drawable.dll</HintPath>

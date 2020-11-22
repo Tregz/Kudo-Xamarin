@@ -310,13 +310,17 @@ namespace Kudo
             int grid = random.Next(5);
             int row = random.Next(3);
             int col = random.Next(3);
-            Incomplete[grid][row, col] = -1;
-            HiddenCount++;
-            if (grid != 4 || row != 1 || col != 1)
+            if (Incomplete[grid][row, col] >= 0)
             {
-                Incomplete[8 - grid][2 - row, 2 - col] = -1; // mirror
+                Incomplete[grid][row, col] = -1;
                 HiddenCount++;
+                if (grid != 4 || row != 1 || col != 1)
+                {
+                    Incomplete[8 - grid][2 - row, 2 - col] = -1; // mirror
+                    HiddenCount++;
+                }
             }
+            else HideValue();
         }
     }
 }
