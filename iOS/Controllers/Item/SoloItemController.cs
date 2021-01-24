@@ -16,7 +16,7 @@ namespace Kudo.iOS
             Title = ViewModel.Title;
             GameNameLabel.Text = ViewModel.Item.Text;
             GameLoadButton.SetTitle("Current", UIControlState.Disabled);
-            if (ViewModel.Item.Id == Preferences.Get("game", "0"))
+            if (ViewModel.Item.Guid == Preferences.Get("game", "0"))
                 GameLoadButton.Enabled = false;
             GameDescriptionLabel.Text = ViewModel.Item.Description;
             GameLevelPicker.Model = new LevelModel(ViewModel);
@@ -26,7 +26,7 @@ namespace Kudo.iOS
 
         partial void GameLoadAction(UIButton sender)
         {
-            Preferences.Set("game", ViewModel.Item.Id);
+            Preferences.Set("game", ViewModel.Item.Guid);
             GameLoadButton.Enabled = false;
         }
     }

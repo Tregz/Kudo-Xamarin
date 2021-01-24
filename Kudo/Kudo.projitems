@@ -9,9 +9,6 @@
     <Import_RootNamespace>Kudo</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Command.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ServiceLocator.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Game.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\CloudDataStore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IDataStore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\MockDataStore.cs" />
@@ -21,5 +18,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ListViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SoloViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\GameViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Models\Game.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AppServices.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Helpers\Command.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Models\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Helpers\" />
   </ItemGroup>
 </Project>

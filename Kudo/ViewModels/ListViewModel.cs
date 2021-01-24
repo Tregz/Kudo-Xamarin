@@ -15,8 +15,10 @@ namespace Kudo
         {
             Title = "Browse";
             Items = new ObservableCollection<Game>();
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            AddItemCommand = new Command<Game>(async (Game item) => await AddItem(item));
+            LoadItemsCommand = new Command(async () =>
+            await ExecuteLoadItemsCommand());
+            AddItemCommand = new Command<Game>(async (Game item) =>
+            await AddItem(item));
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -49,6 +51,7 @@ namespace Kudo
         {
             Items.Add(item);
             await DataStore.AddItemAsync(item);
+            await Cloud.AddItemAsync(item);
         }
     }
 }
