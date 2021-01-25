@@ -4,7 +4,7 @@ using UIKit;
 
 namespace Kudo.iOS
 {
-    public partial class GameController : UIViewController, GameController.OnAnswerListener
+    public partial class GameController : UIViewController, GameController.IAnswer
     {
 
         public static readonly string CellIdentifier = "GameCell";
@@ -35,7 +35,7 @@ namespace Kudo.iOS
             Start(false);
         }
 
-        private void Start(Boolean reload)
+        private void Start(bool reload)
         {
             if (reload) Grid.DataSource.Dispose();
             Soluce = ViewModel.Sudoku;
@@ -44,10 +44,10 @@ namespace Kudo.iOS
             Grid.DataSource = new GridDataSource(ViewModel.Puzzle, this);
         }
 
-        private void ValidateResult(Boolean success)
+        private void ValidateResult(bool success)
         {
             if (success) ViewModel.Game.Successes += 1;
-            String message = success ? "Success!" : "Failure!";
+            string message = success ? "Success!" : "Failure!";
             var alert = UIAlertController.Create("Validation", message, UIAlertControllerStyle.Alert);
             alert.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
             alert.AddAction(UIAlertAction.Create("Restart", UIAlertActionStyle.Destructive, (action) => Start(true)));
@@ -80,12 +80,12 @@ namespace Kudo.iOS
             ValidateResult(validatedCount == ViewModel.HiddenCount);
         }
 
-        void OnAnswerListener.OnAnswer(int grid, int row, int col, int value)
+        void IAnswer.OnAnswer(int grid, int row, int col, int value)
         {
             Answers[grid][row, col] = value;
         }
 
-        public interface OnAnswerListener
+        public interface IAnswer
         {
             void OnAnswer(int grid, int row, int col, int value);
         }
@@ -95,9 +95,9 @@ namespace Kudo.iOS
     {
 
         private readonly List<int[,]> puzzle;
-        private readonly GameController.OnAnswerListener listener;
+        private readonly GameController.IAnswer listener;
 
-        public GridDataSource(List<int[,]> puzzle, GameController.OnAnswerListener listener)
+        public GridDataSource(List<int[,]> puzzle, GameController.IAnswer listener)
         {
             this.puzzle = puzzle;
             this.listener = listener;
@@ -133,10 +133,12 @@ namespace Kudo.iOS
             UICollectionViewCell cell = collectionView.DequeueReusableCell(GameController.CellIdentifier, indexPath) as UICollectionViewCell;
             foreach (UIView subView in cell.ContentView.Subviews) subView.RemoveFromSuperview();
 
-            UIStackView vsv1 = new UIStackView();
-            vsv1.Axis = UILayoutConstraintAxis.Vertical;
-            vsv1.Distribution = UIStackViewDistribution.EqualSpacing;
-            vsv1.Frame = cell.Bounds;
+            UIStackView vsv1 = new UIStackView
+            {
+                Axis = UILayoutConstraintAxis.Vertical,
+                Distribution = UIStackViewDistribution.EqualSpacing,
+                Frame = cell.Bounds
+            };
             nfloat rowWidth = vsv1.Frame.Size.Width;
             nfloat rowHeight = (vsv1.Frame.Size.Height / 3) - 4;
             UIStackView hsv1 = HorizontalStackView(rowWidth, rowHeight);
@@ -212,9 +214,11 @@ namespace Kudo.iOS
 
         private UIStackView HorizontalStackView(nfloat w, nfloat h)
         {
-            UIStackView view = new UIStackView();
-            view.Axis = UILayoutConstraintAxis.Horizontal;
-            view.Distribution = UIStackViewDistribution.EqualSpacing;
+            UIStackView view = new UIStackView
+            {
+                Axis = UILayoutConstraintAxis.Horizontal,
+                Distribution = UIStackViewDistribution.EqualSpacing
+            };
             view.WidthAnchor.ConstraintEqualTo(w).Active = true;
             view.HeightAnchor.ConstraintEqualTo(h).Active = true;
             return view;
