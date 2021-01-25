@@ -8,7 +8,7 @@ namespace Kudo
 {
     public class MockDataStore : IDataStore<Game>
     {
-        List<Game> items;
+        readonly List<Game> items;
 
         public MockDataStore()
         {
@@ -17,7 +17,7 @@ namespace Kudo
             Preferences.Set("game", id);
             var _items = new List<Game>
             {
-                new Game { Id = id, Text = "Save", Description="Game settings and score", Level=0, Successes=0},
+                new Game { Guid = id, Text = "Save", Description="Game settings and score", Level=0, Successes=0},
             };
 
             foreach (Game item in _items)
@@ -35,7 +35,7 @@ namespace Kudo
 
         public async Task<bool> UpdateItemAsync(Game item)
         {
-            var _item = items.Where((Game arg) => arg.Id == item.Id).FirstOrDefault();
+            var _item = items.Where((Game arg) => arg.Guid == item.Guid).FirstOrDefault();
             items.Remove(_item);
             items.Add(item);
 
@@ -44,7 +44,7 @@ namespace Kudo
 
         public async Task<bool> DeleteItemAsync(string id)
         {
-            var _item = items.Where((Game arg) => arg.Id == id).FirstOrDefault();
+            var _item = items.Where((Game arg) => arg.Guid == id).FirstOrDefault();
             items.Remove(_item);
 
             return await Task.FromResult(true);
@@ -52,7 +52,7 @@ namespace Kudo
 
         public async Task<Game> GetItemAsync(string id)
         {
-            return await Task.FromResult(items.FirstOrDefault(s => s.Id == id));
+            return await Task.FromResult(items.FirstOrDefault(s => s.Guid == id));
         }
 
         public async Task<IEnumerable<Game>> GetItemsAsync(bool forceRefresh = false)

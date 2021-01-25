@@ -9,7 +9,7 @@ using Android.Content;
 
 namespace Kudo.Droid
 {
-    public class ListFragment : Android.Support.V4.App.Fragment, BaseFragment
+    public class ListFragment : AndroidX.Fragment.App.Fragment, BaseFragment
     {
         public static ListFragment NewInstance() =>
             new ListFragment { Arguments = new Bundle() };

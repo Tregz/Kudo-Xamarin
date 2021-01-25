@@ -4,9 +4,9 @@ using Android.Content.PM;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
-using Android.Support.V4.App;
-using Android.Support.V4.View;
-using Android.Support.Design.Widget;
+using AndroidX.Fragment.App;
+using AndroidX.ViewPager.Widget;
+using Google.Android.Material.Tabs;
 
 namespace Kudo.Droid
 {
@@ -62,7 +62,7 @@ namespace Kudo.Droid
 
         public override int Count => titles.Length;
 
-        public TabsAdapter(Context context, Android.Support.V4.App.FragmentManager fm) : base(fm)
+        public TabsAdapter(Context context, AndroidX.Fragment.App.FragmentManager fm) : base(fm)
         {
             titles = context.Resources.GetTextArray(Resource.Array.sections);
         }
@@ -70,12 +70,13 @@ namespace Kudo.Droid
         public override Java.Lang.ICharSequence GetPageTitleFormatted(int position) =>
                             new Java.Lang.String(titles[position]);
 
-        public override Android.Support.V4.App.Fragment GetItem(int position)
+        public override AndroidX.Fragment.App.Fragment GetItem(int position)
         {
             switch (position)
             {
-                case 0: return ListFragment.NewInstance();
-                case 1: return InfoFragment.NewInstance();
+                case 0: return GameFragment.NewInstance();
+                case 1: return ListFragment.NewInstance();
+                case 2: return InfoFragment.NewInstance();
             }
             return null;
         }

@@ -5,7 +5,7 @@ using Android.Widget;
 
 namespace Kudo.Droid
 {
-    public class InfoFragment : Android.Support.V4.App.Fragment, BaseFragment
+    public class InfoFragment : AndroidX.Fragment.App.Fragment, BaseFragment
     {
         public static InfoFragment NewInstance() =>
             new InfoFragment { Arguments = new Bundle() };
@@ -46,7 +46,7 @@ namespace Kudo.Droid
 
         }
 
-        void LearnMoreButton_Click(object sender, System.EventArgs e)
+        void LearnMoreButton_Click(object sender, EventArgs e)
         {
             ViewModel.OpenWebCommand.Execute(null);
         }

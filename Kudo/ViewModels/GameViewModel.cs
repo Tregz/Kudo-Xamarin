@@ -12,7 +12,7 @@ namespace Kudo
         private readonly int[] digits = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         private List<int[,]> Incomplete { get; set; }
         private List<int[,]> Soluce { get; set; }
-        private Boolean Debug { get; set; }
+        private bool Debug { get; set; }
         public Command LoadGameCommand { get; set; }
 
         public GameViewModel()
@@ -29,7 +29,7 @@ namespace Kudo
 
             try
             {
-                String id = Preferences.Get("game", "0");
+                string id = Preferences.Get("game", "0");
                 Game = await DataStore.GetItemAsync(id);
             }
             catch (Exception ex)
@@ -56,8 +56,8 @@ namespace Kudo
                 for (int i = 0; i < 9; i++)
                 {
                     if (Debug) Console.WriteLine("Create grid " + i);
-                    Boolean cancel = false;
-                    Boolean completed3x3 = false;
+                    bool cancel = false;
+                    bool completed3x3 = false;
                     int failures = 0;
                     int[,] g = new int[3, 3];
                     int i3x3 = 0;
@@ -67,10 +67,10 @@ namespace Kudo
                         int iRow = 0;
                         for (int row = 0; row < 3; row++)
                         {
-                            Boolean completedRow = false;
+                            bool completedRow = false;
                             while (!completedRow)
                             {
-                                Boolean validRow = true;
+                                bool validRow = true;
                                 for (int col = 0; col < 3; col++)
                                 {
                                     // Numbers left t
@@ -176,7 +176,7 @@ namespace Kudo
                                         fails++;
                                         if (Debug)
                                         {
-                                            String error = "Error in grid " + i;
+                                            string error = "Error in grid " + i;
                                             error += " at row " + row + ",";
                                             error += " column " + col + ".";
                                             Console.WriteLine(error);
@@ -260,7 +260,7 @@ namespace Kudo
             }
         }
 
-        private Boolean IsValidRow(HashSet<int> a, List<int[,]> b, int g, int r)
+        private bool IsValidRow(HashSet<int> a, List<int[,]> b, int g, int r)
         {
             // Check that numbers for the next row should be valid
             if (g > 0) for (int i = 0; i < 3; i++)
@@ -328,7 +328,7 @@ namespace Kudo
 internal static class GameExtensions
 {
 
-    public static void Print(this ICollection<int> c, String about)
+    public static void Print(this ICollection<int> c, string about)
     {
         Console.WriteLine(about + ": " + string.Join("-", c));
     }

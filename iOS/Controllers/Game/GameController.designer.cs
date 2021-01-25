@@ -24,14 +24,6 @@ namespace Kudo.iOS
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UITextView AboutTextView { get; set; }
 
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel AppNameLabel { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel VersionLabel { get; set; }
-
 
         [Action ("ReadMoreButton_TouchUpInside:")]
         partial void ReadMoreButton_TouchUpInside (UIKit.UIButton sender);
@@ -50,16 +42,6 @@ namespace Kudo.iOS
             if (AboutTextView != null) {
                 AboutTextView.Dispose ();
                 AboutTextView = null;
-            }
-
-            if (AppNameLabel != null) {
-                AppNameLabel.Dispose ();
-                AppNameLabel = null;
-            }
-
-            if (VersionLabel != null) {
-                VersionLabel.Dispose ();
-                VersionLabel = null;
             }
         }
     }
