@@ -33,28 +33,18 @@ namespace Kudo.Droid
             int size = parent.Width / 9;
             if (cell == null)
             {
-                rl = new RelativeLayout(context); /*
-                {
-                    Gravity = GravityFlags.Center
-                    //Orientation = Orientation.Vertical,
-                    //TextAlignment = TextAlignment.Center,
-                };*/
-
-                // TODO
+                rl = new RelativeLayout(context);
                 rl.SetGravity(GravityFlags.Center);
-
+                int match = ViewGroup.LayoutParams.MatchParent;
+                rl.LayoutParameters = new ViewGroup.LayoutParams(match, match);
+                
                 if (value > 0)
                 {
                     tv = new TextView(context)
                     {
                         TextAlignment = TextAlignment.Center,
                     };
-                    //tv.SetPadding(8, 8, 8, 8);
-
-                    // TODO
-                    tv.SetMinimumHeight(size);
-                    tv.SetMinimumWidth(size);
-
+                    tv.SetPadding(0, 20, 0, 20);
                     // TODO tv.SetAutoSizeTextTypeWithDefaults(AutoSizeTextType.Uniform);
                     rl.AddView(tv);
                 }
@@ -62,9 +52,9 @@ namespace Kudo.Droid
                 {
                     et = new EditText(context)
                     {
-                        TextAlignment = TextAlignment.Center
+                        Gravity = GravityFlags.Center
                     };
-                    //et.SetPadding(8, 8, 8, 8);
+                    et.SetPadding(0, 5, 0, 5);
                     rl.AddView(et);
                 }
             }
@@ -81,18 +71,9 @@ namespace Kudo.Droid
             }
 
             if (value > 0 && tv != null)
-            {
                 tv.Text = value.ToString();
-            }
-            else if (value == -1 && et != null)
-            {
-                et.Text = value.ToString();
-            }
-
-            // TODO
-            //rl.SetMinimumHeight(size);
-            //rl.SetMinimumWidth(size);
-
+            /* else if (value == -1 && et != null)
+                //et.Text = value.ToString(); */
             return rl;
         }
     }
