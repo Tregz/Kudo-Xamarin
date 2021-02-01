@@ -177,18 +177,18 @@
     <Compile Include="MainApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
-    <Compile Include="Controllers\Fragments\InfoFragment.cs" />
-    <Compile Include="Controllers\Fragments\BaseFragment.cs" />
-    <Compile Include="Controllers\Activities\BaseActivity.cs" />
-    <Compile Include="Controllers\Activities\MainActivity.cs" />
-    <Compile Include="Controllers\Activities\LogoActivity.cs" />
-    <Compile Include="Controllers\Activities\Item\PlusItemActivity.cs" />
-    <Compile Include="Controllers\Activities\Item\SoloItemActivity.cs" />
-    <Compile Include="Controllers\Fragments\List\ListFragment.cs" />
-    <Compile Include="Controllers\Fragments\List\ListRecycler.cs" />
-    <Compile Include="Controllers\Fragments\List\ListEvent.cs" />
-    <Compile Include="Controllers\Fragments\Game\GameFragment.cs" />
-    <Compile Include="Controllers\Fragments\Game\GameAdapter.cs" />
+    <Compile Include="ModelViews\Controllers\Activities\BaseActivity.cs" />
+    <Compile Include="ModelViews\Controllers\Activities\Item\PlusItemActivity.cs" />
+    <Compile Include="ModelViews\Controllers\Activities\Item\SoloItemActivity.cs" />
+    <Compile Include="ModelViews\Controllers\Activities\LogoActivity.cs" />
+    <Compile Include="ModelViews\Controllers\Activities\MainActivity.cs" />
+    <Compile Include="ModelViews\Controllers\Fragments\BaseFragment.cs" />
+    <Compile Include="ModelViews\Controllers\Fragments\Game\GameAdapter.cs" />
+    <Compile Include="ModelViews\Controllers\Fragments\Game\GameFragment.cs" />
+    <Compile Include="ModelViews\Controllers\Fragments\InfoFragment.cs" />
+    <Compile Include="ModelViews\Controllers\Fragments\List\ListEvent.cs" />
+    <Compile Include="ModelViews\Controllers\Fragments\List\ListFragment.cs" />
+    <Compile Include="ModelViews\Controllers\Fragments\List\ListRecycler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\AboutAssets.txt" />
@@ -248,12 +248,8 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Controllers\Fragments\" />
-    <Folder Include="Controllers\Activities\" />
-    <Folder Include="Controllers\Activities\Item\" />
-    <Folder Include="Controllers\Fragments\List\" />
-    <Folder Include="Controllers\Fragments\Game\" />
+    <Folder Include="ModelViews\" />
+    <Folder Include="ModelViews\Controllers\" />
   </ItemGroup>
   <Import Project="..\Kudo\Kudo.projitems" Label="Shared" Condition="Exists('..\Kudo\Kudo.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

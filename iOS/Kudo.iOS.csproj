@@ -95,10 +95,14 @@
       <HintPath>..\packages\Xam.Plugin.Connectivity.3.2.0\lib\Xamarin.iOS10\Plugin.Connectivity.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Essentials">
-      <HintPath>..\packages\Xamarin.Essentials.1.6.0\lib\xamarinios10\Xamarin.Essentials.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Essentials.1.6.1\lib\xamarinios10\Xamarin.Essentials.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK-1.0" />
     <Reference Include="System.Drawing.Common.dll" />
+    <Reference Include="Xamarin.SideMenu">
+      <HintPath>..\packages\Xamarin.SideMenu.1.0\lib\Xamarin.iOS10\Xamarin.SideMenu.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
@@ -161,35 +165,47 @@
     <ImageAsset Include="Assets.xcassets\Logo.imageset\AppIcon_120-2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\Item\SoloItemController.cs" />
-    <Compile Include="Controllers\Item\SoloItemController.designer.cs">
-      <DependentUpon>SoloItemController.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\InfoController.cs" />
-    <Compile Include="Controllers\InfoController.designer.cs">
-      <DependentUpon>InfoController.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\ListController.cs" />
-    <Compile Include="Controllers\ListController.designer.cs">
-      <DependentUpon>ListController.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\MenuController.cs" />
-    <Compile Include="Controllers\MenuController.designer.cs">
-      <DependentUpon>MenuController.cs</DependentUpon>
-    </Compile>
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Main.cs" />
-    <Compile Include="Controllers\Item\PlusItemController.cs" />
-    <Compile Include="Controllers\Item\PlusItemController.designer.cs">
-      <DependentUpon>PlusItemController.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\Game\GameController.cs" />
-    <Compile Include="Controllers\Game\GameController.designer.cs">
+    <Compile Include="ModelViews\Pages\Game\GameController.cs" />
+    <Compile Include="ModelViews\Pages\Game\GameController.designer.cs">
       <DependentUpon>GameController.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\GameCell.cs" />
-    <Compile Include="Views\GameCell.designer.cs">
-      <DependentUpon>GameCell.cs</DependentUpon>
+    <Compile Include="ModelViews\Pages\InfoController.cs" />
+    <Compile Include="ModelViews\Pages\InfoController.designer.cs">
+      <DependentUpon>InfoController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModelViews\Pages\Item\PlusItemController.cs" />
+    <Compile Include="ModelViews\Pages\Item\PlusItemController.designer.cs">
+      <DependentUpon>PlusItemController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModelViews\Pages\Item\SoloItemController.cs" />
+    <Compile Include="ModelViews\Pages\Item\SoloItemController.designer.cs">
+      <DependentUpon>SoloItemController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModelViews\Pages\ListController.cs" />
+    <Compile Include="ModelViews\Pages\ListController.designer.cs">
+      <DependentUpon>ListController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModelViews\Views\GameCell.cs" />
+    <Compile Include="ModelViews\Views\GameCell.designer.cs">
+      <DependentUpon>..\..\Views\GameCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModelViews\Pages\Menu\LeftMenuController.cs" />
+    <Compile Include="ModelViews\Pages\Menu\LeftMenuController.designer.cs">
+      <DependentUpon>LeftMenuController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModelViews\Pages\Menu\UserMenuController.cs" />
+    <Compile Include="ModelViews\Pages\Menu\UserMenuController.designer.cs">
+      <DependentUpon>UserMenuController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModelViews\Pages\Menu\MainMenuController.cs" />
+    <Compile Include="ModelViews\Pages\Menu\MainMenuController.designer.cs">
+      <DependentUpon>MainMenuController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModelViews\Pages\Menu\TabsMenuController.cs" />
+    <Compile Include="ModelViews\Pages\Menu\TabsMenuController.designer.cs">
+      <DependentUpon>TabsMenuController.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -198,13 +214,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="Views\Main.storyboard" />
-    <InterfaceDefinition Include="Views\Logo.storyboard" />
+    <InterfaceDefinition Include="ModelViews\Logo.storyboard" />
+    <InterfaceDefinition Include="ModelViews\Main.storyboard" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets.xcassets\Logo.imageset\" />
-    <Folder Include="Views\" />
-    <Folder Include="Controllers\Game\" />
+    <Folder Include="ModelViews\" />
+    <Folder Include="ModelViews\Pages\" />
+    <Folder Include="ModelViews\Views\" />
+    <Folder Include="ModelViews\Pages\Menu\" />
   </ItemGroup>
   <Import Project="..\Kudo\Kudo.projitems" Label="Shared" Condition="Exists('..\Kudo\Kudo.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
