@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
 
 namespace Kudo
 {
@@ -14,7 +13,7 @@ namespace Kudo
         {
             items = new List<Game>();
             String id = Guid.NewGuid().ToString();
-            Preferences.Set("game", id);
+            // TODO Preferences.Set("game", id);
             var _items = new List<Game>
             {
                 new Game { Guid = id, Text = "Save", Description="Game settings and score", Level=0, Successes=0},
