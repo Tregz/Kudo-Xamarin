@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace Kudo
 {
@@ -28,8 +29,8 @@ namespace Kudo
 
             try
             {
-                // TODO string id = Preferences.Get("game", "0");
-                // TODO Game = await DataStore.GetItemAsync(id);
+                string id = Preferences.Get("game", "0");
+                Game = await DataStore.GetItemAsync(id);
             }
             catch (Exception ex)
             {

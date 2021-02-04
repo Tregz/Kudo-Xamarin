@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using Plugin.Share;
 
 namespace Kudo
 {
@@ -8,7 +9,8 @@ namespace Kudo
         {
             Title = "About";
 
-            // TODO OpenWebCommand = new Command(() => Plugin.Share.CrossShare.Current.OpenBrowser("https://xamarin.com/platform"));
+            OpenWebCommand = new Command(() =>
+            CrossShare.Current.OpenBrowser("https://xamarin.com/platform"));
         }
 
         public ICommand OpenWebCommand { get; }
